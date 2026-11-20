@@ -1,6 +1,6 @@
 # Phase 1: Identity & Creative Requirements, Hussnain Sohail Portfolio
 
-_Status: **v3, rewritten strictly from the brief** (2026-11-20). Awaiting approval._
+_Status: **APPROVED** (2026-11-20), with one change: the signature tool is removed from the site._
 
 **Rule for this document:** every line either comes from your brief (cited as §section) or from an answer you gave. Nothing is invented. Anything not stated in the brief is listed under **Open items**.
 
@@ -17,8 +17,6 @@ _Status: **v3, rewritten strictly from the brief** (2026-11-20). Awaiting approv
 
 **What he delivers (10):** Design · Motion · Range · Performance · Realtime · Security · Reliability · AI · Speed · Shipping. The full wording from §1 is kept verbatim for the content file.
 
-**Signature tool, Full Dev:** an open-source creative-director + full-stack system for Claude and Claude Code (github.com/HASI-desings/Claude-Full-DEV). It has a 13-phase pipeline, 67 curated skills from 11 open-source repos, a design engine (194 palettes, font pairings, 130 UX rules) and an anti-generic checklist. It is presented as **proof that he engineers his own process**.
-
 **Toolkit (19):** Next.js · React · TypeScript · Tailwind · GSAP · Framer Motion · Three.js · Supabase · Appwrite · Electron · Tauri · React Native (Expo) · Python · Java · MQL5 · Vercel · GitHub · Figma · Claude Code.
 
 **Projects:** not a focus yet. The architecture is data-driven from one file and launches with an "in the workshop" state: no empty grid, no fake projects.
@@ -28,7 +26,7 @@ _Status: **v3, rewritten strictly from the brief** (2026-11-20). Awaiting approv
 |---|---|---|
 | Site name/brand | **Hussnain Sohail** | your answer |
 | Audience | **International and Pakistani clients, equally** | your answer |
-| Full Dev copy | As written in §1 | your answer |
+| Signature tool (Full Dev) | **Not mentioned anywhere on the site** | your answer at approval |
 | Project repo | `HASI-desings/my-portfolio` | you attached it |
 
 ## 3. What the site must achieve
