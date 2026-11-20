@@ -1,0 +1,503 @@
+<title>Seven Portfolio Worlds</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&display=swap">
+<style>
+/* Layout: a review board. Each world is one row: live sketch left, decision facts right. Neutral board so the world palettes do the talking. */
+:root{
+  --bg:#ECEEEA; --surface:#F6F7F4; --fg:#1B1F23; --muted:#59616A; --line:#D3D8D2; --accent:#33497F; --pick:#33497F; --pickfg:#F6F7F4;
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif; --body:"Archivo","Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#14171A;--surface:#1B1F23;--fg:#E7EAE5;--muted:#9BA3AA;--line:#2B3136;--accent:#A9B8E6;--pick:#A9B8E6;--pickfg:#14171A;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14171A;--surface:#1B1F23;--fg:#E7EAE5;--muted:#9BA3AA;--line:#2B3136;--accent:#A9B8E6;--pick:#A9B8E6;--pickfg:#14171A;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 72px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-stretch:125%;font-weight:750;font-size:clamp(2rem,5vw,3.4rem);line-height:1.02;letter-spacing:-.01em}
+.lede{max-width:62ch;color:var(--muted);margin:14px 0 0}
+.objects{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:28px}
+.obj{border-top:2px solid var(--fg);padding-top:10px}
+.obj b{font-family:var(--display);font-stretch:112%;font-size:1.05rem}
+.obj p{margin:4px 0 0;color:var(--muted);font-size:.93rem}
+.world{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:32px;align-items:start;border-top:1px solid var(--line);padding-top:32px}
+.stage{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:flex;flex-direction:column;gap:10px}
+canvas{display:block;width:100%;aspect-ratio:4/3;max-width:100%;border-radius:3px}
+.stage figcaption{font-size:.82rem;color:var(--muted)}
+.head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.num{font-family:var(--display);font-stretch:62%;font-weight:300;font-size:3.2rem;line-height:.8;color:var(--muted);font-variant-numeric:tabular-nums}
+h2{font-stretch:125%;font-weight:780;font-size:clamp(1.6rem,3.2vw,2.3rem);line-height:1;letter-spacing:.01em}
+.badge{font-size:.78rem;font-weight:650;letter-spacing:.04em;padding:3px 9px;border-radius:99px;background:var(--pick);color:var(--pickfg);align-self:center}
+.badge.alt{background:transparent;color:var(--fg);border:1px solid var(--fg)}
+.tag{font-family:var(--display);font-stretch:100%;font-size:1.12rem;margin:8px 0 2px}
+.pair{color:var(--muted);margin:0 0 18px;font-size:.95rem}
+.pair strong{color:var(--fg);font-weight:600}
+.swatches{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:22px}
+.sw{display:flex;flex-direction:column;gap:4px;font-size:.74rem;line-height:1.25;min-width:0}
+.sw i{display:block;height:44px;border-radius:2px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.sw span{color:var(--muted);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+h3{font-size:.8rem;font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;font-family:var(--body)}
+dl.map{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 16px;margin:0 0 22px;font-size:.94rem}
+dl.map dt{font-weight:600}
+dl.map dd{margin:0;color:var(--fg)}
+.facts{display:grid;gap:14px;margin-bottom:18px}
+.facts p{margin:0;font-size:.94rem}
+.facts b{display:block;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:650;margin-bottom:2px}
+.cost{display:flex;gap:10px;flex-wrap:wrap;font-size:.86rem}
+.cost span{border:1px solid var(--line);padding:4px 10px;border-radius:99px;background:var(--surface)}
+details{border-top:1px solid var(--line);padding-top:10px;margin-top:6px}
+summary{cursor:pointer;font-weight:600;font-size:.92rem;padding:4px 0}
+summary:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+details ol{margin:8px 0 10px;padding-left:20px;font-size:.92rem}
+details p{font-size:.92rem;margin:0 0 8px;color:var(--muted)}
+.tablewrap{overflow-x:auto;border-top:1px solid var(--line);padding-top:28px}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:.92rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:650}
+td.c{text-align:center}
+.d{display:inline-block;width:12px;height:12px;border-radius:50%;border:1.5px solid var(--fg);vertical-align:-1px}
+.d.f{background:var(--fg)}
+.d.h{background:linear-gradient(90deg,var(--fg) 50%,transparent 50%)}
+.d.e{background:transparent}
+tr.pick td{background:var(--surface)}
+.verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.verdict div{border-top:2px solid var(--fg);padding-top:12px}
+.verdict p{margin:6px 0 0;max-width:60ch}
+.legend{color:var(--muted);font-size:.86rem;margin:10px 0 0}
+@media (max-width:860px){.world{grid-template-columns:minmax(0,1fr);gap:20px}.stage{position:static}}
+@media (max-width:420px){.swatches{grid-template-columns:repeat(3,minmax(0,1fr))}dl.map{grid-template-columns:minmax(0,1fr);gap:0 0}dl.map dd{margin-bottom:8px}}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Seven worlds for Hussnain Sohail</h1>
+  <p class="lede">Phase 2 of your portfolio. Each world is a place the camera travels through, built from one identity object and one unexpected object. Pick one, and I write its full design language and central concept.</p>
+  <div class="objects">
+    <div class="obj"><b>The Move</b><p>“Every problem has a better move.”</p></div>
+    <div class="obj"><b>The Thread</b><p>One unbroken line: idea to shipped product, Lahore to the world.</p></div>
+    <div class="obj"><b>The Prototype</b><p>A designer and engineer in one person. The thing between an idea and a product.</p></div>
+  </div>
+</header>
+
+<!-- 1 CREASE -->
+<section class="world" aria-labelledby="w1">
+  <figure class="stage" style="margin:0"><canvas data-scene="crease" role="img" aria-label="A sheet of paper under a moving grazing light that reveals blue and red crease lines"></canvas><figcaption>Hero moment: a grazing light reveals the hidden crease pattern.</figcaption></figure>
+  <div>
+    <div class="head"><span class="num">1</span><h2 id="w1">Crease</h2><span class="badge alt">Runner-up</span></div>
+    <p class="tag">One sheet, every form.</p>
+    <p class="pair"><strong>The Move</strong> × a folded sheet of paper</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#E3E5E0"></i>Sheet<span>#E3E5E0</span></div>
+      <div class="sw"><i style="background:#A9AEA9"></i>Shade<span>#A9AEA9</span></div>
+      <div class="sw"><i style="background:#22262A"></i>Graphite<span>#22262A</span></div>
+      <div class="sw"><i style="background:#2C4FD4"></i>Valley<span>#2C4FD4</span></div>
+      <div class="sw"><i style="background:#E04A2F"></i>Mountain<span>#E04A2F</span></div>
+    </div>
+    <h3>Where your content lives</h3>
+    <dl class="map">
+      <dt>Hero</dt><dd>One flat sheet floating in soft light, your name printed on it</dd>
+      <dt>Philosophy</dt><dd>The first fold: one crease divides the sheet</dd>
+      <dt>6 genres</dt><dd>The sheet refolds into six abstract forms</dd>
+      <dt>Delivery</dt><dd>A flight along a corrugated surface, each strength a ridge</dd>
+      <dt>Toolkit</dt><dd>The sheet unfolds flat to show the full crease pattern</dd>
+      <dt>Projects</dt><dd>Sheets with creases scored, not yet folded</dd>
+      <dt>Contact</dt><dd>A fresh blank sheet comes to the camera</dd>
+    </dl>
+    <div class="facts">
+      <p><b>Loader</b>The crease pattern scores itself line by line. Each loaded asset scores its creases.</p>
+      <p><b>Material and light</b>Matte fibrous paper, one soft key light, crisp contact shadows.</p>
+      <p><b>Risk</b>Must never show cranes or animal folds.</p>
+    </div>
+    <div class="cost"><span>Budget phone: lightest of the seven</span></div>
+    <details><summary>Two-object connections</summary>
+      <ol><li>A fold is a move that changes everything after it.</li><li>The same sheet becomes any form, like one person building six genres.</li><li>The crease pattern is the blueprint, the folded form is the design.</li><li>Flat to 3D is idea to product.</li><li>A better fold needs fewer creases, like a lighter build.</li></ol>
+      <p>Natural: crease patterns can be computed. Folding stiffens thin material, which is how the Miura fold packs deployable solar arrays. Folds only show through light and shadow.</p>
+    </details>
+  </div>
+</section>
+
+<!-- 2 WARP -->
+<section class="world" aria-labelledby="w2">
+  <figure class="stage" style="margin:0"><canvas data-scene="warp" role="img" aria-label="Indigo warp threads running into depth; alternate threads lift and a brass shuttle passes through"></canvas><figcaption>Hero moment: half the threads lift together and the shuttle weaves the one-liner.</figcaption></figure>
+  <div>
+    <div class="head"><span class="num">2</span><h2 id="w2">Warp</h2><span class="badge">My pick</span></div>
+    <p class="tag">Where design and code were the same machine.</p>
+    <p class="pair"><strong>The Thread</strong> × the Jacquard loom</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#E7E2D6"></i>Cotton<span>#E7E2D6</span></div>
+      <div class="sw"><i style="background:#1B2A55"></i>Indigo<span>#1B2A55</span></div>
+      <div class="sw"><i style="background:#A3322C"></i>Madder<span>#A3322C</span></div>
+      <div class="sw"><i style="background:#5B4332"></i>Loom oak<span>#5B4332</span></div>
+      <div class="sw"><i style="background:#B58A3E"></i>Brass<span>#B58A3E</span></div>
+    </div>
+    <h3>Where your content lives</h3>
+    <dl class="map">
+      <dt>Hero</dt><dd>Low along thousands of taut threads, your name woven in a band</dd>
+      <dt>Philosophy</dt><dd>One punched card. Change one hole and the whole pattern changes</dd>
+      <dt>6 genres</dt><dd>Six woven bands, each a different weave structure</dd>
+      <dt>Delivery</dt><dd>The camera passes through the shed as threads part around each strength</dd>
+      <dt>Toolkit</dt><dd>A wall of spools, one per tool</dd>
+      <dt>Projects</dt><dd>Cloth still on the loom, unfinished edge, loose threads</dd>
+      <dt>Contact</dt><dd>One loose thread reaches toward you. Pull it to start</dd>
+    </dl>
+    <div class="facts">
+      <p><b>Loader</b>Warp threads are strung onto the loom one by one. Thread count follows the real bytes loaded.</p>
+      <p><b>Material and light</b>Cotton and silk with directional sheen, warm raking daylight, lint floating in the beam.</p>
+      <p><b>Risk</b>Indigo can drift toward dark mode with purple. The room stays in daylight.</p>
+    </div>
+    <div class="cost"><span>Budget phone: medium, thread count scales by tier</span></div>
+    <details><summary>Two-object connections</summary>
+      <ol><li>Every pass of the shuttle is a move that decides the pattern.</li><li>Warp is fixed structure (engineering), weft is colour (design). One cloth.</li><li>Punched cards are code that becomes pattern.</li><li>Thread, then cloth, then garment: idea, product, shipped.</li><li>Textiles are Pakistan’s largest export industry. Cloth carries Lahore to the world.</li></ol>
+      <p>Natural: Jacquard’s punched cards inspired Babbage’s Analytical Engine. Ada Lovelace wrote that it “weaves algebraical patterns just as the Jacquard-loom weaves flowers and leaves.” Threads hold a pattern only under tension. Indigo and madder are the two dyes of Sindhi ajrak.</p>
+    </details>
+  </div>
+</section>
+
+<!-- 3 DELTA -->
+<section class="world" aria-labelledby="w3">
+  <figure class="stage" style="margin:0"><canvas data-scene="delta" role="img" aria-label="Layered contour terrain drifting at different speeds with a jade river winding through and a harbour light on the horizon"></canvas><figcaption>Hero moment: a drop, a ripple, then the camera flies downstream.</figcaption></figure>
+  <div>
+    <div class="head"><span class="num">3</span><h2 id="w3">Delta</h2></div>
+    <p class="tag">From the source to the open sea.</p>
+    <p class="pair"><strong>The Thread</strong> × a river</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#CDBB9C"></i>Silt<span>#CDBB9C</span></div>
+      <div class="sw"><i style="background:#3F3327"></i>Riverbed<span>#3F3327</span></div>
+      <div class="sw"><i style="background:#2D7A70"></i>River jade<span>#2D7A70</span></div>
+      <div class="sw"><i style="background:#DDE4E1"></i>Haze<span>#DDE4E1</span></div>
+      <div class="sw"><i style="background:#F2A93B"></i>Harbour light<span>#F2A93B</span></div>
+    </div>
+    <h3>Where your content lives</h3>
+    <dl class="map">
+      <dt>Hero</dt><dd>One drop falls into a still basin. The ripples carry your name</dd>
+      <dt>Philosophy</dt><dd>Water meets a rock and takes the better path around it</dd>
+      <dt>6 genres</dt><dd>Six tributaries join, each from its own valley</dd>
+      <dt>Delivery</dt><dd>Plains where each strength is a terrace the water reaches</dd>
+      <dt>Toolkit</dt><dd>Riverbed stones, one per tool</dd>
+      <dt>Projects</dt><dd>Sandbars of the delta, still forming</dd>
+      <dt>Contact</dt><dd>The coastline at dawn, a harbour light</dd>
+    </dl>
+    <div class="facts">
+      <p><b>Loader</b>Water fills the contour basin. The water level is the real progress.</p>
+      <p><b>Material and light</b>Stacked contour layers like cut sediment, low golden sun, simple reflective water.</p>
+      <p><b>Risk</b>Could read as a travel site. No map shapes, no country outline.</p>
+    </div>
+    <div class="cost"><span>Budget phone: very light</span><span>Best fit for layered parallax</span></div>
+    <details><summary>Two-object connections</summary>
+      <ol><li>Water always finds the better path.</li><li>The source is the idea, the sea is the shipped product.</li><li>Tributaries joining are disciplines merging in one person.</li><li>The river carves terrain (engineering), its meanders draw pattern (design).</li><li>The river ends where ships leave.</li></ol>
+      <p>Natural: the Indus runs the length of Pakistan into the Arabian Sea. Contours are layered slices, which is parallax depth in literal form. A delta is never finished.</p>
+    </details>
+  </div>
+</section>
+
+<!-- 4 THE RUN -->
+<section class="world" aria-labelledby="w4">
+  <figure class="stage" style="margin:0"><canvas data-scene="run" role="img" aria-label="A chrome ball rolling down a zigzag aluminium track into an orange cup"></canvas><figcaption>Hero moment: the first scroll releases the ball and the camera chases it.</figcaption></figure>
+  <div>
+    <div class="head"><span class="num">4</span><h2 id="w4">The Run</h2></div>
+    <p class="tag">Release the idea. Watch it ship.</p>
+    <p class="pair"><strong>The Prototype</strong> × a marble run</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#9C9D98"></i>Concrete<span>#9C9D98</span></div>
+      <div class="sw"><i style="background:#C3C7CA"></i>Aluminium<span>#C3C7CA</span></div>
+      <div class="sw"><i style="background:#C99A62"></i>Maple<span>#C99A62</span></div>
+      <div class="sw"><i style="background:#1F2226"></i>Ink<span>#1F2226</span></div>
+      <div class="sw"><i style="background:#FF5B1F"></i>Signal<span>#FF5B1F</span></div>
+    </div>
+    <h3>Where your content lives</h3>
+    <dl class="map">
+      <dt>Hero</dt><dd>A chrome ball held at the top. “Start a project” is the release</dd>
+      <dt>Philosophy</dt><dd>A switch flips the ball onto a shorter track</dd>
+      <dt>6 genres</dt><dd>A rotating selector sends the ball down six tracks in turn</dd>
+      <dt>Delivery</dt><dd>Mechanisms (lift, spiral, bell, gate), one per strength</dd>
+      <dt>Toolkit</dt><dd>The parts tray</dd>
+      <dt>Projects</dt><dd>An exposed, unfinished track section with tools beside it</dd>
+      <dt>Contact</dt><dd>The ball drops into the cup with a click</dd>
+    </dl>
+    <div class="facts">
+      <p><b>Loader</b>A screw lift raises the ball. Lift height is the real progress.</p>
+      <p><b>Material and light</b>Brushed aluminium, maple, chrome reflections, softbox light, cast concrete.</p>
+      <p><b>Risk</b>Looks like a toy if materials aren’t precise. Sound is the payoff but stays off by default.</p>
+    </div>
+    <div class="cost"><span>Budget phone: medium</span></div>
+    <details><summary>Two-object connections</summary>
+      <ol><li>Every switch on the track is a move.</li><li>One ball carries one idea through the whole machine.</li><li>Built to be watched (design) and to work every time (engineering).</li><li>Release, then landing in the cup: idea, then shipped.</li><li>A better track loses less energy.</li></ol>
+      <p>Natural: a gravity machine is pure cause and effect, like code running. Rails depend on precise tolerances. Every mechanism makes a sound.</p>
+    </details>
+  </div>
+</section>
+
+<!-- 5 OBSCURA -->
+<section class="world" aria-labelledby="w5">
+  <figure class="stage" style="margin:0"><canvas data-scene="obscura" role="img" aria-label="A dark room where a beam through a pinhole projects an outside scene that flips upright and comes into focus"></canvas><figcaption>Hero moment: the projected world flips upright and snaps into focus.</figcaption></figure>
+  <div>
+    <div class="head"><span class="num">5</span><h2 id="w5">Obscura</h2></div>
+    <p class="tag">Bring the idea into focus.</p>
+    <p class="pair"><strong>The Prototype</strong> × the camera obscura</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#1F1A15"></i>Room<span>#1F1A15</span></div>
+      <div class="sw"><i style="background:#F4E8CC"></i>Beam<span>#F4E8CC</span></div>
+      <div class="sw"><i style="background:#C79E57"></i>Dust gold<span>#C79E57</span></div>
+      <div class="sw"><i style="background:#6C8DA4"></i>Blue hour<span>#6C8DA4</span></div>
+      <div class="sw"><i style="background:#A9B3B0"></i>Glass<span>#A9B3B0</span></div>
+    </div>
+    <h3>Where your content lives</h3>
+    <dl class="map">
+      <dt>Hero</dt><dd>A dark room, a pinhole beam, the world projected upside down, your name in the beam</dd>
+      <dt>Philosophy</dt><dd>The lens turns and the image flips upright</dd>
+      <dt>6 genres</dt><dd>Six projections cast on different walls</dd>
+      <dt>Delivery</dt><dd>A rack focus pulls each strength sharp</dd>
+      <dt>Toolkit</dt><dd>A drawer of lenses</dd>
+      <dt>Projects</dt><dd>Undeveloped plates</dd>
+      <dt>Contact</dt><dd>The shutter: take the shot</dd>
+    </dl>
+    <div class="facts">
+      <p><b>Loader</b>The aperture widens as assets load. Brightness is the real progress.</p>
+      <p><b>Material and light</b>Warm dark room, dust in the beam, frosted glass.</p>
+      <p><b>Risk</b>The darkest concept. Must not drift into generic dark mode.</p>
+    </div>
+    <div class="cost"><span>Budget phone: medium, focus is faked with pre-blurred layers</span></div>
+    <details><summary>Two-object connections</summary>
+      <ol><li>Refocusing is a move: the same scene, a better view.</li><li>Blur to sharp is idea to product.</li><li>Optics (engineering) produces an image (design).</li><li>The whole world projected into one small room: Lahore to the world.</li><li>A pinhole needs less, not more.</li></ol>
+      <p>Natural: Ibn al-Haytham gave the first clear explanation of the camera obscura in his Book of Optics. Focus maps directly onto your five visibility tiers, because what is sharp is what matters.</p>
+    </details>
+  </div>
+</section>
+
+<!-- 6 SEVEN PIECES -->
+<section class="world" aria-labelledby="w6">
+  <figure class="stage" style="margin:0"><canvas data-scene="pieces" role="img" aria-label="Seven stone tangram pieces forming a square; one piece lifts and rotates out"></canvas><figcaption>Hero moment: one piece moves and the square opens.</figcaption></figure>
+  <div>
+    <div class="head"><span class="num">6</span><h2 id="w6">Seven Pieces</h2></div>
+    <p class="tag">Same pieces. Better move.</p>
+    <p class="pair"><strong>The Move</strong> × the tangram</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#2D3032"></i>Basalt<span>#2D3032</span></div>
+      <div class="sw"><i style="background:#C8A47C"></i>Sandstone<span>#C8A47C</span></div>
+      <div class="sw"><i style="background:#6F8D7C"></i>Jade stone<span>#6F8D7C</span></div>
+      <div class="sw"><i style="background:#2C4A8C"></i>Lapis<span>#2C4A8C</span></div>
+      <div class="sw"><i style="background:#D6D2CB"></i>Plinth<span>#D6D2CB</span></div>
+    </div>
+    <h3>Where your content lives</h3>
+    <dl class="map">
+      <dt>Hero</dt><dd>Seven honed stones resting as a perfect square, your name engraved across</dd>
+      <dt>Philosophy</dt><dd>One piece rotates and the square opens</dd>
+      <dt>6 genres</dt><dd>The pieces rearrange into six abstract figures</dd>
+      <dt>Delivery</dt><dd>The pieces stack into a structure per strength</dd>
+      <dt>Toolkit</dt><dd>The pieces laid out with labels</dd>
+      <dt>Projects</dt><dd>An unsolved silhouette, waiting</dd>
+      <dt>Contact</dt><dd>An empty silhouette your client’s idea will fill</dd>
+    </dl>
+    <div class="facts">
+      <p><b>Loader</b>Pieces slide into the square one at a time: seven real loading stages.</p>
+      <p><b>Material and light</b>Honed stone, sharp chamfers, one museum spotlight, deep soft shadow.</p>
+      <p><b>Risk</b>Can feel like a puzzle game. Figures can slide into literal icons.</p>
+    </div>
+    <div class="cost"><span>Budget phone: lightest geometry, seven meshes</span></div>
+    <details><summary>Two-object connections</summary>
+      <ol><li>A tangram is solved by moves, not by adding pieces.</li><li>The same seven pieces make any figure: one skill set, many products.</li><li>Geometry (engineering) makes figures (design).</li><li>The square is the idea, the figure is the product.</li><li>No piece is wasted.</li></ol>
+      <p>Natural: every figure folds back into the square, so every solution is reversible. A figure reads from its silhouette alone.</p>
+    </details>
+  </div>
+</section>
+
+<!-- 7 PHOTOTROPISM -->
+<section class="world" aria-labelledby="w7">
+  <figure class="stage" style="margin:0"><canvas data-scene="photo" role="img" aria-label="A sprout bending toward a moving amber light, with a root system spreading below the soil line"></canvas><figcaption>Hero moment: on desktop the cursor is the light and the sprout bends toward it.</figcaption></figure>
+  <div>
+    <div class="head"><span class="num">7</span><h2 id="w7">Phototropism</h2></div>
+    <p class="tag">Design above. Engineering below.</p>
+    <p class="pair"><strong>The Prototype</strong> × a seedling growing toward light</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#241C16"></i>Soil<span>#241C16</span></div>
+      <div class="sw"><i style="background:#9EB9A1"></i>Celadon<span>#9EB9A1</span></div>
+      <div class="sw"><i style="background:#F1B45E"></i>Grow amber<span>#F1B45E</span></div>
+      <div class="sw"><i style="background:#DADFD8"></i>Glass haze<span>#DADFD8</span></div>
+      <div class="sw"><i style="background:#E6DCC8"></i>Root ivory<span>#E6DCC8</span></div>
+    </div>
+    <h3>Where your content lives</h3>
+    <dl class="map">
+      <dt>Hero</dt><dd>A seed in dark soil under a single light, with your name</dd>
+      <dt>Philosophy</dt><dd>The shoot bends toward the light</dd>
+      <dt>6 genres</dt><dd>Six branches</dd>
+      <dt>Delivery</dt><dd>Design and motion as leaves above; performance, security and reliability as roots below</dd>
+      <dt>Toolkit</dt><dd>A map of the roots</dd>
+      <dt>Projects</dt><dd>Buds that haven’t opened yet</dd>
+      <dt>Contact</dt><dd>Seeds released into the wind</dd>
+    </dl>
+    <div class="facts">
+      <p><b>Loader</b>Roots grow underground. Root length is the real progress.</p>
+      <p><b>Material and light</b>Damp soil, backlit translucent leaves, greenhouse haze.</p>
+      <p><b>Risk</b>“Growth” is a common marketing metaphor. The above and below split is what makes it yours.</p>
+    </div>
+    <div class="cost"><span>Budget phone: medium, growth generated once</span></div>
+    <details><summary>Two-object connections</summary>
+      <ol><li>A plant bends toward the better light.</li><li>Seed to plant is idea to product.</li><li>Above the soil is design, below it is engineering. One organism.</li><li>Seeds travel on the wind, Lahore to the world.</li><li>Growth follows rules. L-systems are how computers grow plants.</li></ol>
+      <p>Natural: plants grow toward light. Branching follows mathematical rules. The root system is the hidden half of the plant.</p>
+    </details>
+  </div>
+</section>
+
+<section aria-labelledby="cmp">
+  <div class="tablewrap">
+    <h2 id="cmp" style="font-size:1.6rem;margin-bottom:16px">How they compare</h2>
+    <table>
+      <thead><tr><th>World</th><th>Idea to shipped</th><th>Designer and engineer</th><th>Better move</th><th>Pakistan to global</th><th>Layered parallax</th><th>Budget phone</th></tr></thead>
+      <tbody>
+        <tr><td>1 Crease</td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d e" role="img" aria-label="weak"></i></td><td class="c"><i class="d h" role="img" aria-label="partial"></i></td><td>Lowest cost</td></tr>
+        <tr class="pick"><td><b>2 Warp</b></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td>Medium</td></tr>
+        <tr><td>3 Delta</td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d h" role="img" aria-label="partial"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td>Low</td></tr>
+        <tr><td>4 The Run</td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d e" role="img" aria-label="weak"></i></td><td class="c"><i class="d h" role="img" aria-label="partial"></i></td><td>Medium</td></tr>
+        <tr><td>5 Obscura</td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d h" role="img" aria-label="partial"></i></td><td class="c"><i class="d h" role="img" aria-label="partial"></i></td><td>Medium</td></tr>
+        <tr><td>6 Seven Pieces</td><td class="c"><i class="d h" role="img" aria-label="partial"></i></td><td class="c"><i class="d h" role="img" aria-label="partial"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d e" role="img" aria-label="weak"></i></td><td class="c"><i class="d e" role="img" aria-label="weak"></i></td><td>Lowest cost</td></tr>
+        <tr><td>7 Phototropism</td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td class="c"><i class="d h" role="img" aria-label="partial"></i></td><td class="c"><i class="d f" role="img" aria-label="strong"></i></td><td>Medium</td></tr>
+      </tbody>
+    </table>
+    <p class="legend"><i class="d f"></i> strong &nbsp; <i class="d h"></i> partial &nbsp; <i class="d e"></i> weak</p>
+  </div>
+</section>
+
+<section class="verdict" aria-label="Recommendation">
+  <div><h3>My pick</h3><h2 style="font-size:1.5rem">2 · Warp</h2><p>The only world where “designer and engineer in one” is a historical fact rather than a metaphor: the loom is where pattern-making and computing met. The Pakistan link is real and felt through material. “In the workshop” is natural: cloth still on the loom.</p></div>
+  <div><h3>Runner-up</h3><h2 style="font-size:1.5rem">1 · Crease</h2><p>The lightest on a budget phone and the cleanest single idea. One sheet, six forms.</p></div>
+</section>
+</div>
+
+<script>
+(()=>{
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const smooth=x=>{x=clamp(x);return x*x*(3-2*x)};
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function poly(ctx,pts){ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();}
+
+const scenes={
+crease(ctx,w,h,t){
+  ctx.fillStyle='#CDD0CA';ctx.fillRect(0,0,w,h);
+  const L=0.5+0.45*Math.sin(t*0.6);
+  const q=[[w*.2,h*.3],[w*.8,h*.22],[w*.87,h*.7],[w*.15,h*.79]];
+  const P=(u,v)=>{const[a,b,c,d]=q;const x1=a[0]+(b[0]-a[0])*u,y1=a[1]+(b[1]-a[1])*u,x2=d[0]+(c[0]-d[0])*u,y2=d[1]+(c[1]-d[1])*u;return[x1+(x2-x1)*v,y1+(y2-y1)*v]};
+  ctx.save();ctx.shadowColor='rgba(34,38,42,.3)';ctx.shadowBlur=34;ctx.shadowOffsetY=20;poly(ctx,q);ctx.fillStyle='#DADCD6';ctx.fill();ctx.restore();
+  const a=P(0,.5),b=P(1,.5);const g=ctx.createLinearGradient(a[0],a[1],b[0],b[1]);
+  g.addColorStop(0,'#C8CBC5');g.addColorStop(clamp(L-.3),'#D5D8D2');g.addColorStop(clamp(L),'#F4F5F1');g.addColorStop(clamp(L+.3),'#D5D8D2');g.addColorStop(1,'#C3C6C0');
+  poly(ctx,q);ctx.fillStyle=g;ctx.fill();
+  ctx.lineCap='round';
+  const seg=(u1,v1,u2,v2,col)=>{const um=(u1+u2)/2;ctx.globalAlpha=Math.max(.05,1-Math.abs(um-L)*3.4);ctx.strokeStyle=col;const p1=P(u1,v1),p2=P(u2,v2);ctx.beginPath();ctx.moveTo(p1[0],p1[1]);ctx.lineTo(p2[0],p2[1]);ctx.stroke()};
+  ctx.lineWidth=1.4;
+  for(let i=1;i<6;i++){const v=i/6;for(let k=0;k<8;k++){const u1=k/8,u2=(k+1)/8;seg(u1,v+(k%2?.022:-.022),u2,v+((k+1)%2?.022:-.022),'#E04A2F')}}
+  for(let k=1;k<8;k++){const u=k/8;for(let j=0;j<6;j++){const v1=j/6,v2=(j+1)/6;seg(u+(j%2?.012:-.012),v1,u+((j+1)%2?.012:-.012),v2,'#2C4FD4')}}
+  ctx.globalAlpha=1;
+},
+warp(ctx,w,h,t){
+  const bg=ctx.createLinearGradient(0,0,0,h);bg.addColorStop(0,'#EFEAE0');bg.addColorStop(1,'#D8CFBE');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
+  const vx=w*.5,vy=h*.3,fell=h*.42,N=70,s=smooth(Math.sin(t*1.3)*.5+.5);
+  const xAt=(x0,y)=>vx+(x0-vx)*((y-vy)/(h-vy));
+  const x0s=[...Array(N)].map((_,i)=>-w*.45+(i/(N-1))*w*1.9);
+  // woven cloth
+  const left=x0s[0],right=x0s[N-1];
+  poly(ctx,[[xAt(left,vy+2),vy+2],[xAt(right,vy+2),vy+2],[xAt(right,fell),fell],[xAt(left,fell),fell]]);ctx.fillStyle='#1B2A55';ctx.fill();
+  for(let r=0;r<6;r++){const y1=vy+2+(fell-vy-2)*(r/6),y2=y1+(fell-vy)*.07;if(r%2)continue;poly(ctx,[[xAt(left,y1),y1],[xAt(right,y1),y1],[xAt(right,y2),y2],[xAt(left,y2),y2]]);ctx.fillStyle='#A3322C';ctx.fill()}
+  // threads
+  for(let pass=0;pass<2;pass++){
+    for(let i=0;i<N;i++){const up=i%2===1;if((pass===0)===up)continue;const x0=x0s[i];const lift=up?s*h*.2:0;
+      ctx.strokeStyle=i%10===5?'#A3322C':'#1B2A55';ctx.globalAlpha=up?.95:.7;ctx.lineWidth=up?1.3:1.1;
+      ctx.beginPath();ctx.moveTo(xAt(x0,fell),fell);ctx.lineTo(x0,h+4-lift);ctx.stroke();}
+    if(pass===0&&s>.15){const sx=vx+Math.sin(t*1.3-Math.PI/2)*w*.42;const sy=h*.8-s*h*.07;ctx.globalAlpha=clamp(s*1.4);
+      ctx.fillStyle='#B58A3E';ctx.beginPath();ctx.ellipse(sx,sy,w*.07,h*.014,0,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#5B4332';ctx.fillRect(sx-w*.012,sy-h*.006,w*.024,h*.012);}
+  }
+  ctx.globalAlpha=1;
+  const lg=ctx.createRadialGradient(w*.15,-h*.1,0,w*.15,-h*.1,h*1.1);lg.addColorStop(0,'rgba(255,238,205,.45)');lg.addColorStop(1,'rgba(255,238,205,0)');ctx.fillStyle=lg;ctx.fillRect(0,0,w,h);
+},
+delta(ctx,w,h,t){
+  const sky=ctx.createLinearGradient(0,0,0,h*.5);sky.addColorStop(0,'#E9EEEB');sky.addColorStop(1,'#DDE4E1');ctx.fillStyle=sky;ctx.fillRect(0,0,w,h);
+  const sun=ctx.createRadialGradient(w*.7,h*.27,0,w*.7,h*.27,h*.35);sun.addColorStop(0,'rgba(242,169,59,.35)');sun.addColorStop(1,'rgba(242,169,59,0)');ctx.fillStyle=sun;ctx.fillRect(0,0,w,h);
+  const cols=['#D2D9D4','#CFCCBC','#CDBB9C','#B49C7C','#8B7459','#5D4B3A','#3F3327'];
+  const layerY=j=>h*(.3+j*.095);
+  const ys=[];
+  cols.forEach((c,j)=>{const off=t*(4+j*7);ctx.beginPath();ctx.moveTo(0,h);const row=[];
+    for(let x=0;x<=w+6;x+=6){const y=layerY(j)+Math.sin((x+off)*.011+j*1.7)*h*.022*(1+j*.35)+Math.sin((x+off)*.029+j)*h*.009;ctx.lineTo(x,y);row.push(y)}
+    ctx.lineTo(w,h);ctx.closePath();ctx.fillStyle=c;ctx.fill();ys.push(row)});
+  ctx.strokeStyle='#2D7A70';ctx.lineCap='round';
+  for(let y=h*.31;y<h;y+=3){const k=(y-h*.31)/(h*.69);const x=w*.46+Math.sin(y*.035-t*.4)*w*.07*k+Math.sin(y*.011)*w*.05*k;
+    ctx.lineWidth=1+k*9;ctx.globalAlpha=.55+k*.4;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+.01,y+3.2);ctx.stroke()}
+  ctx.globalAlpha=.5+.5*Math.abs(Math.sin(t*1.6));ctx.fillStyle='#F2A93B';ctx.beginPath();ctx.arc(w*.83,h*.285,3.2,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
+},
+run(ctx,w,h,t){
+  const bg=ctx.createLinearGradient(0,0,0,h);bg.addColorStop(0,'#A6A7A2');bg.addColorStop(1,'#8C8D88');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
+  const key=[[.1,.12],[.66,.2],[.28,.37],[.76,.5],[.32,.65],[.7,.78],[.5,.86]].map(p=>[p[0]*w,p[1]*h]);
+  const pts=[];for(let i=0;i<key.length-1;i++){const p0=key[Math.max(0,i-1)],p1=key[i],p2=key[i+1],p3=key[Math.min(key.length-1,i+2)];
+    for(let s=0;s<24;s++){const u=s/24,u2=u*u,u3=u2*u;pts.push([.5*((2*p1[0])+(-p0[0]+p2[0])*u+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*u2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*u3),.5*((2*p1[1])+(-p0[1]+p2[1])*u+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*u2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*u3)])}}
+  pts.push(key[key.length-1]);
+  const len=[0];for(let i=1;i<pts.length;i++)len.push(len[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
+  key.slice(1,-1).forEach(p=>{ctx.fillStyle='#C99A62';ctx.fillRect(p[0]-5,p[1]+6,10,h-p[1]);ctx.fillStyle='rgba(0,0,0,.12)';ctx.fillRect(p[0]+5,p[1]+6,3,h-p[1])});
+  const stroke=(lw,c,dy=0)=>{ctx.lineWidth=lw;ctx.strokeStyle=c;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]+dy):ctx.moveTo(p[0],p[1]+dy));ctx.stroke()};
+  stroke(8,'rgba(31,34,38,.25)',5);stroke(7,'#7D8186');stroke(4.5,'#C3C7CA');stroke(1.2,'#F1F3F4',-1.2);
+  const e=key[key.length-1];ctx.fillStyle='#FF5B1F';ctx.beginPath();ctx.moveTo(e[0]-16,e[1]+2);ctx.lineTo(e[0]+16,e[1]+2);ctx.lineTo(e[0]+11,e[1]+24);ctx.lineTo(e[0]-11,e[1]+24);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#1F2226';ctx.fillRect(key[0][0]-12,key[0][1]-12,8,18);
+  const cyc=(t*.14)%1.15,p=clamp(cyc);const d=smooth(p)*len[len.length-1];let i=1;while(i<len.length-1&&len[i]<d)i++;
+  const f=(d-len[i-1])/Math.max(1e-6,len[i]-len[i-1]);const bx=pts[i-1][0]+(pts[i][0]-pts[i-1][0])*f,by=pts[i-1][1]+(pts[i][1]-pts[i-1][1])*f-7;
+  const r=Math.max(6,w*.016);const bg2=ctx.createRadialGradient(bx-r*.4,by-r*.4,r*.1,bx,by,r);bg2.addColorStop(0,'#FFFFFF');bg2.addColorStop(.45,'#B8BDC2');bg2.addColorStop(1,'#2E3237');
+  ctx.fillStyle=bg2;ctx.beginPath();ctx.arc(bx,by,r,0,Math.PI*2);ctx.fill();
+},
+obscura(ctx,w,h,t){
+  ctx.fillStyle='#1F1A15';ctx.fillRect(0,0,w,h);
+  const ph=smooth(Math.sin(t*.55+1.25)*.5+.5);const R=[w*.56,h*.17,w*.37,h*.52];const ph0=[w*.1,h*.45];
+  const beam=ctx.createLinearGradient(ph0[0],0,R[0],0);beam.addColorStop(0,'rgba(244,232,204,.30)');beam.addColorStop(1,'rgba(244,232,204,.05)');
+  poly(ctx,[ph0,[R[0],R[1]],[R[0],R[1]+R[3]]]);ctx.fillStyle=beam;ctx.fill();
+  ctx.save();ctx.beginPath();ctx.rect(R[0],R[1],R[2],R[3]);ctx.clip();
+  ctx.fillStyle='#2A231C';ctx.fillRect(R[0],R[1],R[2],R[3]);
+  ctx.translate(R[0]+R[2]/2,R[1]+R[3]/2);ctx.scale(1,-1+2*ph);
+  if('filter' in ctx)ctx.filter=`blur(${((1-ph)*5).toFixed(2)}px)`;
+  const W=R[2],H=R[3];const sky=ctx.createLinearGradient(0,-H/2,0,H*.1);sky.addColorStop(0,'#6C8DA4');sky.addColorStop(1,'#A9B3B0');ctx.fillStyle=sky;ctx.fillRect(-W/2,-H/2,W,H*.6);
+  ctx.fillStyle='#C79E57';ctx.beginPath();ctx.arc(W*.22,-H*.02,H*.06,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#3A332B';[[-.48,.05,.12,.25],[-.34,-.06,.09,.36],[-.22,.0,.14,.3],[-.05,-.12,.07,.42],[.05,-.02,.16,.32],[.24,.04,.1,.26],[.36,-.08,.12,.38]].forEach(b=>ctx.fillRect(W*b[0],H*b[1],W*b[2],H*(.5-b[1])));
+  ctx.restore();if('filter' in ctx)ctx.filter='none';
+  ctx.fillStyle='#F4E8CC';ctx.beginPath();ctx.arc(ph0[0],ph0[1],2.4,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#120E0B';ctx.fillRect(0,0,ph0[0]-2,h);
+  const rnd=rng(7);for(let i=0;i<46;i++){const u=rnd(),v=rnd(),sp=.02+rnd()*.05;const x=ph0[0]+(R[0]-ph0[0])*((u+t*sp)%1);const spread=(x-ph0[0])/(R[0]-ph0[0]);const y=ph0[1]+(v-.5)*R[3]*spread*.95+Math.sin(t*.7+i)*3;
+    ctx.globalAlpha=.25+.35*Math.sin(t+i)**2;ctx.fillStyle='#F4E8CC';ctx.fillRect(x,y,1.6,1.6)}
+  ctx.globalAlpha=1;
+},
+pieces(ctx,w,h,t){
+  ctx.fillStyle='#D6D2CB';ctx.fillRect(0,0,w,h);
+  const sp=ctx.createRadialGradient(w*.5,h*.1,0,w*.5,h*.45,h*.8);sp.addColorStop(0,'rgba(255,255,255,.55)');sp.addColorStop(1,'rgba(255,255,255,0)');ctx.fillStyle=sp;ctx.fillRect(0,0,w,h);
+  const S=Math.min(w,h)*.56,ox=w/2-S/2,oy=h/2-S/2+h*.03;
+  const P=[{p:[[0,0],[1,0],[.5,.5]],c:'#2D3032'},{p:[[0,0],[.5,.5],[0,1]],c:'#3A3E41'},{p:[[1,.5],[1,1],[.5,1]],c:'#C8A47C'},
+    {p:[[.75,.25],[.75,.75],[.5,.5]],c:'#6F8D7C'},{p:[[.25,.75],[.5,1],[0,1]],c:'#C8A47C'},{p:[[.5,.5],[.75,.75],[.5,1],[.25,.75]],c:'#2C4A8C'},
+    {p:[[1,0],[1,.5],[.75,.75],[.75,.25]],c:'#6F8D7C',move:true}];
+  const m=smooth(Math.sin(t*.7)*.5+.5);
+  P.forEach(o=>{const cx=o.p.reduce((a,q)=>a+q[0],0)/o.p.length,cy=o.p.reduce((a,q)=>a+q[1],0)/o.p.length;
+    ctx.save();ctx.translate(ox+cx*S,oy+cy*S);
+    if(o.move){ctx.translate(S*.22*m,-S*.14*m);ctx.rotate(Math.PI/4*m)}
+    ctx.shadowColor='rgba(20,22,24,.32)';ctx.shadowBlur=o.move?14+m*16:10;ctx.shadowOffsetY=o.move?6+m*12:5;
+    poly(ctx,o.p.map(q=>[(q[0]-cx)*S*.965,(q[1]-cy)*S*.965]));ctx.fillStyle=o.c;ctx.fill();ctx.restore()});
+},
+photo(ctx,w,h,t){
+  const hz=h*.6;const sky=ctx.createLinearGradient(0,0,0,hz);sky.addColorStop(0,'#E6EAE3');sky.addColorStop(1,'#D6DCD4');ctx.fillStyle=sky;ctx.fillRect(0,0,w,hz);
+  const lx=w*.5+Math.sin(t*.5)*w*.3,ly=h*.14;const gl=ctx.createRadialGradient(lx,ly,0,lx,ly,h*.45);gl.addColorStop(0,'rgba(241,180,94,.85)');gl.addColorStop(.15,'rgba(241,180,94,.35)');gl.addColorStop(1,'rgba(241,180,94,0)');ctx.fillStyle=gl;ctx.fillRect(0,0,w,hz);
+  ctx.fillStyle='#241C16';ctx.fillRect(0,hz,w,h-hz);
+  const g=reduce?1:clamp(.72+t/6);
+  if(!scenes._roots){const rnd=rng(3),segs=[];const grow=(x,y,a,l,d)=>{if(d>6||l<4)return;const x2=x+Math.cos(a)*l,y2=y+Math.sin(a)*l;segs.push([x,y,x2,y2,d]);const n=d<2?3:2;for(let k=0;k<n;k++)grow(x2,y2,a+(rnd()-.5)*1.3,l*(.62+rnd()*.15),d+1)};grow(0,0,Math.PI/2,1,0);scenes._roots=segs}
+  const rs=h*.17;ctx.strokeStyle='#E6DCC8';ctx.lineCap='round';
+  scenes._roots.forEach(s=>{if(s[4]>g*6.5)return;ctx.globalAlpha=.6-s[4]*.06;ctx.lineWidth=Math.max(.6,2.6-s[4]*.4);ctx.beginPath();ctx.moveTo(w*.5+s[0]*rs,hz+s[1]*rs);ctx.lineTo(w*.5+s[2]*rs,hz+s[3]*rs);ctx.stroke()});
+  ctx.globalAlpha=1;
+  const bx=w*.5,tipx=bx+(lx-bx)*.38*g,tipy=hz-h*.36*g,cx=bx+(lx-bx)*.04,cy=hz-h*.2*g;
+  ctx.strokeStyle='#9EB9A1';ctx.lineWidth=3.2;ctx.beginPath();ctx.moveTo(bx,hz);ctx.quadraticCurveTo(cx,cy,tipx,tipy);ctx.stroke();
+  if(g>.55){const k=smooth((g-.55)/.45);const ang=Math.atan2(tipy-cy,tipx-cx);ctx.fillStyle='#9EB9A1';
+    [[-1],[1]].forEach(([sd])=>{ctx.save();ctx.translate(tipx,tipy);ctx.rotate(ang+sd*0.9);ctx.beginPath();ctx.ellipse(h*.045*k,0,h*.05*k,h*.018*k,0,0,Math.PI*2);ctx.fill();ctx.restore()})}
+}
+};
+
+document.querySelectorAll('canvas[data-scene]').forEach(c=>{
+  const draw=scenes[c.dataset.scene];const ctx=c.getContext('2d');if(!ctx||!draw)return;
+  let w=0,h=0,vis=false,raf=0;const t0=performance.now();
+  const frame=t=>{if(!w||!h)return;ctx.save();draw(ctx,w,h,t);ctx.restore()};
+  const size=()=>{const r=c.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,2);w=r.width;h=r.height;c.width=Math.round(w*d);c.height=Math.round(h*d);ctx.setTransform(d,0,0,d,0,0);frame(reduce?2.4:(performance.now()-t0)/1000)};
+  const loop=now=>{frame((now-t0)/1000);if(vis)raf=requestAnimationFrame(loop)};
+  new ResizeObserver(size).observe(c);
+  if(!reduce)new IntersectionObserver(([e])=>{vis=e.isIntersecting;cancelAnimationFrame(raf);if(vis)raf=requestAnimationFrame(loop)}).observe(c);
+});
+})();
+</script>
