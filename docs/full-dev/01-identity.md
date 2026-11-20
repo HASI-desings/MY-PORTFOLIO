@@ -1,109 +1,104 @@
-# Identity & Creative Requirements: Hussnain Sohail Portfolio
+# Phase 1: Identity & Creative Requirements, Hussnain Sohail Portfolio
 
-_Status: **draft v2** (2026-11-20), awaiting approval._ Items marked **[proposal]** are my inferences. You did not state them.
+_Status: **v3, rewritten strictly from the brief** (2026-11-20). Awaiting approval._
+
+**Rule for this document:** every line either comes from your brief (cited as §section) or from an answer you gave. Nothing is invented. Anything not stated in the brief is listed under **Open items**.
 
 ---
 
-## What he does
-Hussnain Sohail is an independent **designer-engineer** based in Lahore. He runs the personal studio HASI Designs, founded ProSol, and studies BS Software Engineering at UCP. He takes a client's idea through concept, UI/UX, frontend, backend, database and deployment to a shipped product, and he does all of it himself. He works in six genres: web experiences, web apps/SaaS, desktop software, mobile apps, AI-integrated products, and automation/trading tools.
-**Business model [proposal]:** client projects found through direct referral, LinkedIn, Fiverr and Upwork. The portfolio is the conversion point for all of these channels.
+## 1. Who he is (§1)
+- **Name:** Hussnain Sohail
+- **Brands:** Founder of ProSol · personal studio HASI Designs
+- **Base:** Lahore, Pakistan · BS Software Engineering student at UCP
+- **One-liner:** "A designer and engineer in one person — I take an idea all the way to a shipped product."
+- **Philosophy:** "Every problem has a better move."
 
-**The problem he solves for clients:** with most freelancers, a client has to hire a designer, a developer and someone to deploy, and then coordinate between them. Hussnain is one accountable person who has taste and also ships working software.
+**Genres (6):** Web experiences (brand sites, storefronts, landing pages) · Web applications & SaaS (dashboards, platforms, PWAs) · Desktop software (offline-first business tools) · Mobile apps (cross-platform Android & iOS) · AI-integrated products (assistants, insights, voice) · Automation & trading tools (bots, extensions, Expert Advisors).
 
-## Audience
-**Decided:** International and Pakistani clients are **equal priority**. The brief form offers a **USD / PKR** currency switch, and both **email and WhatsApp** are contact channels.
+**What he delivers (10):** Design · Motion · Range · Performance · Realtime · Security · Reliability · AI · Speed · Shipping. The full wording from §1 is kept verbatim for the content file.
 
-| Segment | Who exactly | Context & device | What they need from the site |
-|---|---|---|---|
-| A · International clients | Founders and small-business owners who arrive from Upwork, Fiverr or LinkedIn. Budget roughly $500–5k per project | Desktop at work, then a phone re-check | Proof of quality in seconds, trust that he finishes, an easy way to start |
-| B · Pakistani brands & SMEs | Lahore/Karachi businesses that want to look premium without paying agency prices | **Budget Android on 4G**, often from WhatsApp links | A site that loads fast on *their* phone. That speed is the proof |
-| C · Studios & agencies | Teams looking for a creative developer for motion or 3D work | Desktop, curious, inspecting the build | Craft details, smoothness, how it was built (Full Dev) |
-| D · Developers & peers | People who find him through the Full Dev repo | Desktop, GitHub tab open | Credibility of the engineering mind behind the tool |
+**Signature tool, Full Dev:** an open-source creative-director + full-stack system for Claude and Claude Code (github.com/HASI-desings/Claude-Full-DEV). It has a 13-phase pipeline, 67 curated skills from 11 open-source repos, a design engine (194 palettes, font pairings, 130 UX rules) and an anti-generic checklist. It is presented as **proof that he engineers his own process**.
 
-Segments A and B weigh the same. Segment B also shapes the build: **the site has to prove his "fluid on budget phones" claim on the very phone the client is holding.**
+**Toolkit (19):** Next.js · React · TypeScript · Tailwind · GSAP · Framer Motion · Three.js · Supabase · Appwrite · Electron · Tauri · React Native (Expo) · Python · Java · MQL5 · Vercel · GitHub · Figma · Claude Code.
 
-## Differentiation
-- **One person, end to end.** Most local portfolios are either "designer" or "developer". He is genuinely both, and the site has to show that through how it is made.
-- **He engineers his own process.** Full Dev is an open-source system he built. Few freelancers at any level can point to their own tooling.
-- **Performance as a value, not a footnote.** A heavy 3D world that still runs on a cheap phone is the argument in itself.
-- **[proposal] Self-proving site.** The site can show its own *real* runtime facts in T3/T4: the quality tier it picked for your device, the bytes it loaded, and the frame rate it is holding. These are live numbers measured at runtime, which keeps them within the "no fake stats" rule.
+**Projects:** not a focus yet. The architecture is data-driven from one file and launches with an "in the workshop" state: no empty grid, no fake projects.
 
-## Personality
-| Is | Is not |
-|---|---|
-| Inventive | Gimmicky (effects that don't mean anything) |
-| Precise | Cold or sterile |
-| Confident | Arrogant or hype-driven |
-| Warm (a good person to work with) | Casual or unprofessional |
-| Fast | Rushed or unfinished |
-
-## Emotions & impression
-- **Visitors should feel:** a moment of wonder, then trust. "How did one person build this?" turns into "I want him on my project."
-- **In 5 seconds they should understand:** his name, that he designs *and* builds products, and that they can start a project now.
-
-## Actions
-- **Primary:** Start a project (the T5 brief flow).
-- **Secondary:** Explore Full Dev on GitHub · reach him directly (email/LinkedIn) · browse genres and capabilities.
-
-## Ambitions **[proposal]**
-- **Short term:** win the first serious clients through this site and establish HASI Designs as a studio name.
-- **Long term:** grow from a one-person studio into a product/tech company. The site architecture (content file, projects module) has to scale into a studio site without a rebuild.
-
-## Requirements (MoSCoW)
-- **Must:** a scroll-driven 3D world (camera travels, sections are places) · the five visibility tiers T1–T5 driven from one content file · a semantic HTML layer that holds all content · a loader that belongs to the world, with real progress · device tiers (high/med/low), capped DPR, rendering paused when off-screen or hidden · no-WebGL and reduced-motion versions · an error boundary per scene · a T5 project-brief form (Zod, spam protection, designed states) · a data-driven projects module that launches in an "in the workshop" state · SEO, OG image, sitemap, robots · deployment on Vercel.
-- **Should:** cursor-reactive depth on desktop · touch- or scroll-reactive depth on mobile · ambient sound, off by default · privacy-friendly analytics · T4 panels that close with the back gesture.
-- **Could:** gyroscope depth (opt-in, see flag 4) · the live performance readout · Urdu-language touches.
-- **Won't (now):** a CMS, a blog, case-study pages (the architecture will be ready for them), multiple languages, payments.
-
-## Constraints
-- **Budget:** student budget, so free tiers (Vercel Hobby, Supabase free tier, free email-service tier).
-- **3D asset pipeline:** no 3D artist and no Blender pipeline in this environment. See flag 3.
-- **Maintainer:** Hussnain edits content later without touching 3D code, which means one content file.
-- **Persistence:** this cloud workspace is temporary, so the project needs a GitHub repo to push to early (see open questions).
-- **Domain:** unknown.
-
-## Feasibility flags: conflicts I'm raising now, with the better move
-1. **Lighthouse ≥ 90 vs. a heavy 3D world.** On desktop, 90+ is achievable. On mobile, a WebGL world will cost points. **Better move:** the T1 content (name, one-liner, CTA) is real HTML and paints immediately as the LCP element. three.js and the scenes load *after* first paint. With that setup, mobile can realistically score in the high 80s to 90s. I'll report what we actually measure.
-2. **A full-screen preloader would hurt LCP and accessibility.** A loader that hides the page delays LCP and keeps screen readers waiting. **Better move:** T1 text is readable from the first frame. The loader lives in the world layer *behind and around* it: the world assembles itself while you're already reading his name, and the progress it shows is real.
-3. **Draco/KTX2 assets with no modelling pipeline.** **Better move:** build the world mostly from **procedural and instanced geometry plus custom shaders**. That is tiny to download and plays to his engineering strength. glTF (Meshopt) and KTX2 are only for the one or two hero objects that need modelled detail, generated or optimized with gltf-transform.
-4. **Gyroscope on iOS needs a permission prompt** (a system dialog after a tap). **Better move:** the default mobile depth comes from touch and scroll, and gyro is an opt-in toggle. No surprise dialogs.
-5. **Fiverr/Upwork links on a premium site** can anchor clients toward gig-level prices. **[proposal]** Keep them out of T1/T2 and offer them in T5 as "also on" channels for people who prefer marketplace protection.
-6. ~~Full Dev numbers.~~ **Decided:** Full Dev is presented exactly as the brief describes it. Its copy lives in the content file, so it can be edited later without touching code.
-7. ~~Name collision.~~ **Decided:** the site is branded **Hussnain Sohail**. HASI Designs appears inside the site as his studio, which avoids the Dribbble name collision and the "desings" spelling.
-
-## Competitors reviewed
-I searched the category of Lahore and Pakistan freelance designer-developers (Dribbble, Truelancer, Twine and Freelancermap profiles) rather than individual named sites.
-| Pattern | What they communicate | Visual cliché |
+## 2. Decisions you have made
+| Item | Decision | Source |
 |---|---|---|
-| "Full Stack Developer \| Next.js \| GSAP \| Tailwind" headlines | A stack, not a person or an outcome | Tech-logo grids, skill-percentage bars |
-| Agency-style freelancer pages | "We do everything" | Dark background + neon gradient, glass cards, laptop mockups |
-| Marketplace profiles | Price and speed | Fake counters ("150+ projects"), stock photos |
+| Site name/brand | **Hussnain Sohail** | your answer |
+| Audience | **International and Pakistani clients, equally** | your answer |
+| Full Dev copy | As written in §1 | your answer |
+| Project repo | `HASI-desings/my-portfolio` | you attached it |
 
-## Industry clichés to avoid
-- "Hi, I'm Hussnain 👋", typewriter role rotators, skill % bars, scrolling tech-logo marquees, count-up stats.
-- Engineer = **circuit boards, matrix rain, terminal windows, floating code editors, 3D laptops**.
-- Designer = **pen tools, Figma frames, colour swatches** as decoration.
-- 3D portfolio = **space, astronauts, planets, floating low-poly islands, blob gradients**.
-- "Every problem has a better move" = **a literal chessboard and knight**. That is the obvious first idea, and Phase 2 must beat it or radically subvert it.
-- Pakistan → global = **truck-art pastiche, a green-crescent palette, landmark silhouettes, a spinning globe with flight arcs**. The origin should be felt in material, rhythm or craft, never stamped on as a symbol.
-- Anything a visitor could trace back to igloo.inc or landonorris.com.
+## 3. What the site must achieve
+- It is the **first impression to clients** and must prove what he can build **through the experience itself** (§0).
+- It must not feel template-made or like a "generic AI website" (§0).
+- **Primary action:** "Start a project" (§4, T1).
+- **T1 must make sense in 5 seconds** with nothing else on screen. The screen holds **one main idea at a time** (§4).
 
-## Anti-goals: failure even if it technically works
-- It stutters on a budget Android. That disproves his main claim.
-- The world impresses but the visitor can't say what he does after 5 seconds.
-- It feels packed: more than one main idea on screen at once.
-- Content exists only in WebGL (invisible to screen readers and Google).
-- Any fake number, fake project, dead button or lorem ipsum.
-- Someone recognizes it as "the igloo one" or "the Lando one".
-- The contact flow loses a lead (an error with no recovery, a silent failure).
+## 4. Personality: traced to the brief
+| Is | Source | Must not become |
+|---|---|---|
+| Precise, high standard | "Apple-level standard" (§1 Design) | Cold or sterile |
+| Light and efficient | "fluid on budget phones", "lightweight builds" (§1 Motion, Performance) | Heavy decoration that stutters |
+| Complete, end to end | "concept … deployment — one person" (§1 Range) | "Does everything" vagueness |
+| Fast | "idea to working product in days" (§1 Speed) | Rushed or unfinished |
+| Original | "no template feel" (§0) | Gimmicky effects with no meaning |
 
-## Open questions
-1. **ProSol:** what is it, and should it appear on the site?
-2. Contact placeholders (EMAIL / LINKEDIN / FIVERR / UPWORK / **WHATSAPP**), needed before Phase 6.
-3. A portrait photo: yes or no? **[proposal]** None in T1; optional in the About panel (T4).
-4. Domain: do you own one?
-5. Contact backend (Supabase or an email service): you asked me to raise this before wiring, so I'll come back to it in Phase 4.
+## 5. Requirements from the brief
+**Experience (§3)**
+- A scroll-driven 3D world where scrolling moves a camera with layered depth. Sections are places or states in the world, and transitions between them are camera moves or world transformations.
+- The world is a metaphor for him: builder, engineer + designer, "every problem has a better move", Pakistan → global, idea → shipped product.
+- 6–7 world concepts, each with its metaphor, content mapping, hero moment, material/lighting mood and palette. **You pick one.**
+- Lenis smooth scroll · GSAP ScrollTrigger timelines · cursor-reactive depth on desktop · gyro/touch depth on mobile · ambient sound, off by default, with a toggle.
+- Palette, type and materials come from the concept: no dark mode + purple gradient, no stock icons, no predictable positions.
 
-**Resolved:** site brand (Hussnain Sohail) · audience (both equally) · Full Dev copy (as in the brief) · project repo (`HASI-desings/my-portfolio`).
+**Hierarchy (§4)**
+- Tiers T1–T5 and a **Hierarchy Map** (content item → tier → trigger → location → why) for your approval before the build.
+- Every T3 has a mobile equivalent. Every T4 closes with Esc, a close button and the mobile back gesture, and returns focus to where it came from.
 
-_Sources: [Hasi Design Studio on Dribbble](https://dribbble.com/hasidesign_studio) · category scan via [Truelancer](https://www.truelancer.com/freelancer/alishbashahzad18), [Freelancermap](https://www.freelancermap.com/profile/muhammad-f), [Twine](https://www.twine.net/user1642917), [Dribbble](https://dribbble.com/developer_noon/about)._
+**Loading & failure (§5)**
+- A loader that belongs to the world and shows real progress, with no flash, jump or layout shift on handoff.
+- The hero scene loads first; later scenes stream in. Scroll is never blocked.
+- Loading, success, empty and error states for every async component.
+- High/medium/low device tiers · capped DPR · rendering paused when hidden or off-screen.
+- A no-WebGL 2D version · a reduced-motion version · lighter assets on slow networks · an error boundary per scene.
+
+**Technical (§6)**
+- Next.js App Router + TypeScript · R3F + drei · GSAP + ScrollTrigger · Lenis · Tailwind · Framer Motion · Vercel.
+- glTF with Draco/Meshopt · KTX2 · instancing · baked lighting · actual download sizes reported.
+- Lighthouse ≥ 90 on desktop and as high as possible on mobile · 60fps on desktop and mid-range Android · no layout shift after the loader · LCP < 2.5s.
+- A semantic HTML layer, keyboard navigation, visible focus, enough contrast. Content never exists only in WebGL.
+- Metadata, a designed OG image, a sitemap, robots.
+- A contact form with Zod validation, spam protection and designed states. **The backend is your call, asked before wiring.**
+- One content file holding all text and tiers · isolated scene modules · one animation/timing config.
+- No fake features, no lorem ipsum, no placeholder stats.
+
+## 6. Anti-goals (from the brief)
+- Any layout, object, colour scheme, typography or signature move traceable to igloo.inc or landonorris.com (§2).
+- A flat page with some 3D decoration on it (§3).
+- A packed screen, or two ideas competing at once (§4).
+- Hover-only information (§4).
+- Content that exists only inside WebGL (§6).
+- Dead buttons, lorem ipsum, placeholder stats, fake projects (§1, §6).
+
+## 7. Conflicts with performance or accessibility, as §7 asked me to flag
+1. **The preloader vs. LCP and accessibility.** If the loader covers the page, LCP waits for the 3D assets, and screen-reader users wait for nothing they need.
+   **Better move:** the T1 text (name, one-liner, CTA) is real HTML, visible from the first paint, and counts as the LCP element. The world-themed loader runs in the canvas layer behind it and still shows real progress. This keeps everything §5 asks for and protects the < 2.5s LCP target.
+2. **The mobile Lighthouse score with a WebGL world.** three.js plus the scenes is a heavy JavaScript bundle on a phone.
+   **Better move:** load the 3D code only after first paint (dynamic import), and size the low tier for budget Android. I will report the measured score, not a promise.
+3. **3D assets with no modelling tool here.** Blender is **not installed** in this workspace (checked). Draco/KTX2 compression needs source models to compress.
+   **Better move:** build the world mainly from code (procedural + instanced geometry and shaders), which keeps the download very small. Use compressed glTF/KTX2 only where a modelled asset is truly needed, optimized with gltf-transform (available through npm).
+4. **The gyro on iPhone.** iOS only allows motion sensors after a permission prompt triggered by a tap.
+   **Better move:** touch and scroll drive the depth effect by default on mobile, and gyro turns on only if the visitor taps a toggle.
+
+## 8. Open items and when each is needed
+| Item | Needed by | Source |
+|---|---|---|
+| Contact placeholders: EMAIL, LINKEDIN, FIVERR, UPWORK | Before Phase 6 | §1 |
+| Contact-form backend: Supabase table or email service | Before wiring (I'll ask at Phase 4) | §6 |
+| The T5 form for "both audiences": budget currency, plus any other channels such as WhatsApp | Hierarchy Map (Phase 4) | your audience answer |
+| Domain | Phase 12 deploy | not in the brief |
+
+Competitor research is skipped. The brief names its references (igloo.inc and landonorris.com), and Phase 3 studies those in the browser.
