@@ -75,3 +75,15 @@
 - `playwright` is pinned to **1.63.0**, the version of the browser preinstalled in this environment.
 - Favicon: static `public/favicon.svg` (Structure.md allows "or static favicon"), so `app/icon.tsx` is not created.
 - `sitemap.ts` and `opengraph-image.tsx` are created in Phase 12 with the designed OG image and the production URL; `manifest.ts` and `robots.ts` exist now.
+
+### D-016 · Portrait method and sizes — DECIDED
+- `rembg` is not installable here (its model download is blocked), so `scripts/process-portrait.py` used the spec's fallback, done as a **difference matte**: the backdrop is modelled from the visible background, and each edge pixel's opacity is how much it darkens that backdrop, measured against the subject colour right next to it (black hair, lit skin). Interior pixels are copied unchanged (verified: max difference 1.3/255, which is rounding). The script still prefers rembg automatically where it is available.
+- Composited on the photo's own backdrop (Scene 06, D-014), the cutout reproduces the original photo; the hair keeps its real backlit glints.
+- Native size after trimming is **1040 × 1188**, so the set is `me-1040.webp/png`, `me-640.webp`, `me-400.webp` (not 1600/1000/600 — no upscaling). Total 373 KB (< 600 KB budget).
+- Measured backdrop: neutral grey (R = G = B), elliptical glow centred at 50 % / 65 % of the photo, x-stretch 1.3, falling from #FCFCFC behind him to #727272 at the edges (RMS fit error 5.2/255).
+
+### D-017 · Generated font files — DECIDED
+- `scripts/build-typeface.py` (not in Structure.md; added so the font files are reproducible) instances Archivo at wght 900 / wdth 125 and writes `public/fonts/archivo-black.typeface.json` (A–Z, 0–9, 14 KB; verified with three.js TextGeometry).
+- It also writes three 7 KB static subsets to `src/app/_og/` for the Open Graph image (the OG renderer cannot read variable woff2). `_og` is a private folder — Next.js never routes it.
+- Grain: 256 × 256 tileable noise quantised to 9 grey levels (31 KB instead of 62 KB; identical at 4 % opacity).
+- Project screenshots and covers: none generated — no projects are displayed (D-012). `scripts/capture-screenshots.mjs` runs and reports "nothing to capture" until a LIVE project is added.

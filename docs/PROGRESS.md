@@ -5,7 +5,7 @@
 | 0 | Wipe & prepare | ✅ Done | Only `_brief/` (8 spec files + `Video.mp4` + `ME.png`) remains. Pushed. |
 | 1 | Study & confirm | ✅ Done · ⛔ Stop 1 approved | `docs/REFERENCE_ANALYSIS.md`, `docs/DECISIONS.md`, `scripts/extract-reference-frames.sh` |
 | 2 | Project setup | ✅ Done | Next.js 16.4.6, React 19.3.1, full tree stubbed; build/lint/typecheck pass |
-| 3 | Assets pipeline | ⏳ In progress | ⛔ Stop 2 |
+| 3 | Assets pipeline | ✅ Done | Owner waived the remaining stops: build straight through |
 | 4 | Design system & tokens | — | |
 | 5 | Core engine | — | |
 | 6 | Scene 01 · Identity | — | ⛔ Stop 3 (look test) |
@@ -39,3 +39,10 @@
 - `next.config.ts`: Security.md §2 headers (CSP production-only), `poweredByHeader: false`, AVIF/WebP images.
 - `.gitignore`, `.nvmrc` (24), `.prettierrc`, CI workflow (lint → typecheck → build, no deploy), LICENSE, README.
 - **Verified:** `npm run lint` ✓ · `npm run typecheck` ✓ · `npm run build` ✓ (5 static routes) · `next start` serves all 7 security headers, no `X-Powered-By` · unknown `/projects/*` → 404 · Prettier clean.
+
+### Phase 3
+- Owner instruction: work through every phase without approval stops and push to `main`.
+- Portrait: difference-matte cutout → `public/me/me-1040.{webp,png}`, `me-640.webp`, `me-400.webp`, `me-placeholder.txt` (373 KB total). Backdrop falloff measured for Scene 06 (D-014, D-016).
+- 3D typeface `public/fonts/archivo-black.typeface.json` (14 KB) + OG font subsets (D-017). Verified in three.js: "HASI" → 4,380-vertex extruded geometry.
+- `public/textures/grain.png` (31 KB), `public/favicon.svg` (Archivo H, ice on obsidian, red corner cut).
+- `scripts/capture-screenshots.mjs` ready for future LIVE projects (verified: reports nothing to capture).

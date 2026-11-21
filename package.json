@@ -14,7 +14,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "format": "prettier --write .",
     "assets:portrait": "python3 scripts/process-portrait.py",
-    "assets:screens": "node scripts/capture-screenshots.mjs",
+    "assets:fonts": "python3 scripts/build-typeface.py",
+    "assets:screens": "node --experimental-strip-types scripts/capture-screenshots.mjs",
     "analyze": "next analyze"
   },
   "dependencies": {
