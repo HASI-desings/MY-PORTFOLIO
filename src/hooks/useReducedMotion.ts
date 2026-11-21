@@ -16,6 +16,10 @@ function mediaStore(query: string) {
 const reduced = mediaStore("(prefers-reduced-motion: reduce)");
 const fine = mediaStore("(hover: hover) and (pointer: fine)");
 const wide = mediaStore("(min-width: 640px)");
+// Mirrors director.ts BuildContext.mobile: horizontal chapters on laptops and landscape tablets.
+const horizontal = mediaStore(
+  "(min-width: 1024px), (min-width: 640px) and (orientation: landscape)",
+);
 const noop = () => () => undefined;
 
 /** Live `prefers-reduced-motion` (false on the server). */
@@ -43,4 +47,9 @@ export function useMode(): "cine" | "static" | null {
 /** ≥ 640 px wide — where the 3D toolkit is allowed (Security.md §5). */
 export function useWide() {
   return useSyncExternalStore(wide.subscribe, wide.get, () => true);
+}
+
+/** Scene 03 chapters run horizontally (desktop, landscape tablets) or vertically (phones). */
+export function useHorizontalChapters() {
+  return useSyncExternalStore(horizontal.subscribe, horizontal.get, () => true);
 }

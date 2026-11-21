@@ -11,7 +11,7 @@ const tones = {
 interface MonoLabelProps {
   children: ReactNode;
   tone?: keyof typeof tones;
-  as?: "span" | "p" | "div";
+  as?: "span" | "p" | "div" | "h2";
   className?: string;
 }
 

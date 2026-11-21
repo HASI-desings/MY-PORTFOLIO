@@ -745,3 +745,516 @@ html.cine .identity-plane {
     transform: rotateY(360deg);
   }
 }
+
+/* ───────────────────────── Scene 03 ───────────────────────── */
+.create-track {
+  display: flex;
+  flex-direction: column;
+}
+
+html.cine .create-track {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+html.cine .create-track.is-h {
+  flex-direction: row;
+}
+
+html.cine .chapter {
+  flex: 0 0 100%;
+  height: 100%;
+}
+
+html:not(.cine) .chapter {
+  min-height: 100svh;
+}
+
+html:not(.cine) .chapter-visual {
+  min-height: 52svh;
+}
+
+.create-seg {
+  transition: background-color var(--dur-short) var(--ease-out);
+}
+
+.create-seg[data-on] {
+  background: var(--red);
+}
+
+/* Agents graph: the node the pointer is near glows red. */
+.va-node.is-hot .va-dot {
+  stroke: var(--red);
+}
+
+/* Web visual cursor: drifts across the front frame while the chapter is on screen. */
+.vw-cursor {
+  left: 30%;
+  top: 40%;
+  opacity: 0;
+}
+
+.vw-cursor.is-on {
+  opacity: 1;
+  animation: vw-cursor 5.2s var(--ease-in-out) infinite;
+}
+
+@keyframes vw-cursor {
+  0% {
+    transform: translate(0, 0);
+  }
+  30% {
+    transform: translate(180%, 900%);
+  }
+  55% {
+    transform: translate(1400%, 300%);
+  }
+  80% {
+    transform: translate(900%, 1400%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* ───────────────────────── Scene 05 ───────────────────────── */
+.philo-block {
+  --beam: 50%;
+  --lit: 1;
+  --nudge: 0%;
+  perspective: 800px;
+  transform-origin: 0 0;
+}
+
+.philo-block .letter {
+  transform-origin: 50% 100%;
+}
+
+.philo-line {
+  width: fit-content;
+}
+
+/* The light: a narrow vertical beam over a floor that rises to fully lit (--lit). */
+.philo-lit {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    rgb(0 0 0 / var(--lit)) 0%,
+    rgb(0 0 0 / var(--lit)) calc(var(--beam) + var(--nudge) - 14%),
+    #000 calc(var(--beam) + var(--nudge)),
+    rgb(0 0 0 / var(--lit)) calc(var(--beam) + var(--nudge) + 14%),
+    rgb(0 0 0 / var(--lit)) 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    rgb(0 0 0 / var(--lit)) 0%,
+    rgb(0 0 0 / var(--lit)) calc(var(--beam) + var(--nudge) - 14%),
+    #000 calc(var(--beam) + var(--nudge)),
+    rgb(0 0 0 / var(--lit)) calc(var(--beam) + var(--nudge) + 14%),
+    rgb(0 0 0 / var(--lit)) 100%
+  );
+}
+
+.philo-underline {
+  position: absolute;
+  left: 0;
+  right: 0.15em;
+  bottom: 0.02em;
+  height: 2px;
+  background: var(--red);
+  transform-origin: 0 50%;
+}
+
+.philo-sup {
+  color: var(--ice-60);
+  transition: color var(--dur-short) var(--ease-out);
+}
+
+.philo-support:hover .philo-sup {
+  color: var(--ice-30);
+}
+
+.philo-support .philo-sup:hover {
+  color: var(--ice);
+}
+
+.philo-sup .mask-line {
+  overflow: hidden;
+}
+
+/* ───────────────────────── Scene 06 ───────────────────────── */
+.final {
+  --ph: 88svh; /* portrait height (Design.md §9) */
+  --pw: calc(var(--ph) * 0.8754); /* 1040 / 1188 */
+}
+
+@media (max-width: 639px) {
+  .final {
+    --ph: 70svh;
+  }
+}
+
+@media (max-height: 499px) {
+  .final {
+    --ph: 90svh;
+  }
+}
+
+/* ME.png's own studio backdrop, measured from the photo (D-014 / D-016), anchored to the
+   portrait so it lines up with the image at any screen size and aspect. */
+.final-backdrop {
+  background: radial-gradient(
+    calc(var(--pw) * 0.83) calc(var(--ph) * 1.18) at calc(50% - var(--pw) * 0.0183)
+      calc(100% - var(--ph) * 0.413),
+    var(--studio-core) 0%,
+    var(--studio-40) 40%,
+    var(--studio-50) 50%,
+    var(--studio-60) 60%,
+    var(--studio-70) 70%,
+    var(--studio-80) 80%,
+    var(--studio-edge) 90%
+  );
+}
+
+.final-plane {
+  position: absolute;
+  z-index: 1;
+  left: 36%;
+  top: calc(100% + 3svh);
+  width: 130vmax;
+  height: 24svh;
+  background: var(--red);
+  transform-origin: 0 50%;
+  transform: translateY(-50%) rotate(-18deg) scaleX(var(--reveal, 1));
+}
+
+html.cine .final-plane {
+  --reveal: 0;
+}
+
+.final-portrait {
+  left: calc(50% - var(--pw) / 2);
+  width: var(--pw);
+  height: var(--ph);
+}
+
+/* Thin red rim from behind-right: a red copy of the silhouette, nudged toward the light. */
+.final-rim {
+  background: var(--red);
+  -webkit-mask: url(/me/me-640.webp) center / 100% 100% no-repeat;
+  mask: url(/me/me-640.webp) center / 100% 100% no-repeat;
+  transform: translate(clamp(3px, 0.45vw, 7px), clamp(-4px, -0.25vw, -2px));
+  filter: blur(0.6px);
+}
+
+.final-statements {
+  top: clamp(64px, 12svh, 140px);
+}
+
+.final-statement {
+  position: absolute;
+  left: var(--edge-x);
+  right: var(--edge-x-r);
+  top: 0;
+  color: var(--obsidian);
+  font-size: min(var(--fs-giant), 10.2vw); /* two lines max, even at 360 px */
+}
+
+html:not(.cine) .final-statements {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+
+html:not(.cine) .final-statement {
+  position: relative;
+  left: auto;
+  right: auto;
+}
+
+html:not(.cine) .final-statement + .final-statement {
+  font-size: min(calc(var(--fs-giant) * 0.6), 8vw);
+}
+
+.final-cta {
+  top: calc(78svh - 32px);
+}
+
+@media (max-width: 639px) {
+  .final-cta {
+    top: calc(72svh - 28px);
+  }
+}
+
+html.cine .final-cta {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.final-footer {
+  color: var(--ice-60);
+}
+
+/* Phones: lift the footer clear of the Instagram link. */
+@media (max-width: 639px) {
+  .final-footer {
+    bottom: calc(52px + var(--safe-bottom)) !important;
+  }
+}
+
+.final-noscript {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  bottom: 64px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 20px;
+  background: var(--obsidian);
+  color: var(--ice);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+/* The CTA (Design.md §9): tactile, weighty, never bouncy. */
+.cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  padding: 0 40px;
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--obsidian);
+  background: var(--red);
+  border-radius: 2px;
+  box-shadow: 0 18px 50px -12px var(--red-glow);
+  transition:
+    transform var(--dur-short) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out),
+    background-color var(--dur-micro) var(--ease-out);
+}
+
+@media (max-width: 639px) {
+  .cta {
+    height: 56px;
+    padding: 0 32px;
+  }
+}
+
+.cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 60px -10px rgb(239 35 60 / 0.55);
+}
+
+.cta:active {
+  transform: translateY(2px);
+  background: var(--red-deep);
+  box-shadow: 0 10px 26px -14px var(--red-glow);
+  transition-duration: var(--dur-micro);
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--ice);
+  outline-offset: 4px;
+}
+
+.cta__sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgb(223 229 235 / 0.45) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.cta:hover .cta__sheen {
+  transform: translateX(120%);
+  transition: transform 500ms var(--ease-out);
+}
+
+.cta__roll {
+  position: relative;
+  display: block;
+  height: 1.2em;
+  line-height: 1.2em;
+  overflow: hidden;
+}
+
+.cta__text {
+  display: block;
+  transition: transform var(--dur-short) var(--ease-out);
+}
+
+.cta:hover .cta__text {
+  transform: translateY(-100%);
+}
+
+/* Contact options. */
+.contact-opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 0 16px;
+  color: var(--ice);
+  border: 1px solid var(--ice-30);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  transition: border-color var(--dur-micro) var(--ease-out);
+}
+
+.contact-opt__label {
+  transition: transform var(--dur-short) var(--ease-out);
+}
+
+.contact-opt__arrow {
+  margin-left: auto;
+  opacity: 0;
+  transform: translate(-4px, 4px);
+  transition:
+    opacity var(--dur-short) var(--ease-out),
+    transform var(--dur-short) var(--ease-out);
+}
+
+.contact-opt:hover,
+.contact-opt:focus-visible {
+  border-color: var(--red);
+}
+
+.contact-opt:hover .contact-opt__label,
+.contact-opt:focus-visible .contact-opt__label {
+  transform: translateX(4px);
+}
+
+.contact-opt:hover .contact-opt__arrow,
+.contact-opt:focus-visible .contact-opt__arrow {
+  opacity: 1;
+  transform: none;
+}
+
+/* Grows upward from where the CTA's bottom edge was. */
+.contact-sheet {
+  position: absolute;
+  bottom: -64px;
+}
+
+@media (max-width: 639px) {
+  .contact-sheet {
+    bottom: -56px;
+  }
+}
+
+/* ───────────────────────── Scene 04 (renders only when projects exist) ───────────────────────── */
+.projects-surface {
+  perspective: 1400px;
+  background: linear-gradient(180deg, transparent, var(--obsidian-800) 30%);
+}
+
+.projects-row {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 0 var(--edge-x);
+  transform-style: preserve-3d;
+}
+
+@media (min-width: 640px) and (orientation: landscape), (min-width: 1024px) {
+  .projects-row {
+    flex-direction: row;
+    gap: 4vw;
+    padding-left: 30vw;
+    transform: rotateX(14deg);
+    transform-origin: 50% 100%;
+  }
+
+  .plate {
+    width: 38vw;
+  }
+}
+
+.plate {
+  transform-style: preserve-3d;
+  transition:
+    transform var(--dur-med) var(--ease-out),
+    opacity var(--dur-med) var(--ease-out);
+}
+
+.plate[data-near] {
+  transform: translateZ(6px);
+}
+
+.plate.is-lifted {
+  transform: translateZ(60px) translateY(-14px) rotateX(-6deg) scale(1.03);
+  z-index: 2;
+}
+
+.plate.is-dimmed {
+  opacity: 0.55;
+}
+
+.plate-tilt {
+  transition: transform var(--dur-short) var(--ease-out);
+}
+
+.plate-shadow {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -18px;
+  height: 30px;
+  background: radial-gradient(ellipse at center, var(--obsidian-900), transparent 70%);
+  filter: blur(6px);
+  transition:
+    transform var(--dur-med) var(--ease-out),
+    opacity var(--dur-med) var(--ease-out);
+}
+
+.plate.is-lifted .plate-shadow {
+  transform: translateY(18px) scale(1.15);
+  opacity: 0.85;
+  filter: blur(14px);
+}
+
+.plate-scrim {
+  background: linear-gradient(0deg, rgb(17 18 23 / 0.95), rgb(17 18 23 / 0));
+}
+
+.plate-more {
+  clip-path: inset(0 0 100% 0);
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    clip-path var(--dur-med) var(--ease-out),
+    opacity var(--dur-med) var(--ease-out),
+    transform var(--dur-med) var(--ease-out);
+}
+
+.plate.is-lifted .plate-more,
+.plate:focus-within .plate-more {
+  clip-path: inset(0 0 -20% 0);
+  opacity: 1;
+  transform: none;
+}
+
+.status-live {
+  animation: live-pulse 2s var(--ease-in-out) infinite;
+}
+
+@keyframes live-pulse {
+  50% {
+    opacity: 0.25;
+  }
+}

@@ -210,21 +210,13 @@ function build() {
     }
     master.set({}, {}, total);
 
-    const snapPoints = ctx.touch ? collectSnapPoints(segments, ctx, total) : [];
+    snapPoints = ctx.touch ? collectSnapPoints(segments, ctx, total) : [];
     trigger = ScrollTrigger.create({
       trigger: track,
       start: "top top",
       end: "bottom bottom",
       animation: master,
       scrub: ctx.touch ? true : 0.8,
-      snap: snapPoints.length
-        ? {
-            snapTo: (value: number) => snapNear(value, snapPoints),
-            duration: { min: 0.2, max: 0.6 },
-            delay: 0.12,
-            ease: "power2.inOut",
-          }
-        : undefined,
     });
   });
 
@@ -259,13 +251,34 @@ function collectSnapPoints(segments: Segment[], ctx: BuildContext, total: number
   return points;
 }
 
-function snapNear(value: number, points: { at: number; from: number; to: number }[]) {
-  const inside = points.filter((p) => value >= p.from && value <= p.to);
-  if (!inside.length) return value;
-  return inside.reduce(
-    (best, p) => (Math.abs(p.at - value) < Math.abs(best - value) ? p.at : best),
-    inside[0].at,
-  );
+/**
+ * Touch only: once scrolling has settled inside a snapping scene, ease to the nearest
+ * chapter if it is close. Anywhere else the scroll stays exactly where the visitor put it.
+ * (ScrollTrigger's own snap projects flick velocity past the page end, so it is not used.)
+ */
+let snapPoints: { at: number; from: number; to: number }[] = [];
+let snapTimer = 0;
+let snapping = false;
+
+function onScrollSettle() {
+  if (!snapPoints.length || snapping) return;
+  window.clearTimeout(snapTimer);
+  snapTimer = window.setTimeout(() => {
+    const range = scrollRange();
+    if (!range) return;
+    const value = window.scrollY / range;
+    const inside = snapPoints.filter((p) => value >= p.from && value <= p.to);
+    if (!inside.length) return;
+    const target = inside.reduce(
+      (best, p) => (Math.abs(p.at - value) < Math.abs(best - value) ? p.at : best),
+      inside[0].at,
+    );
+    const dy = (target - value) * range;
+    if (Math.abs(dy) < 2 || Math.abs(dy) > window.innerHeight * 0.6) return;
+    snapping = true;
+    window.scrollTo({ top: target * range, behavior: "smooth" });
+    window.setTimeout(() => (snapping = false), 700);
+  }, 160);
 }
 
 /* ─────────────── Per-update ─────────────── */
@@ -481,11 +494,13 @@ export function startDirector() {
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   startLenis();
   window.addEventListener("resize", onResize);
+  window.addEventListener("scroll", onScrollSettle, { passive: true });
   window.addEventListener("orientationchange", onResize);
   queueBuild();
   return () => {
     window.removeEventListener("resize", onResize);
     window.removeEventListener("orientationchange", onResize);
+    window.removeEventListener("scroll", onScrollSettle);
     gctx?.revert();
     gctx = null;
     master = null;

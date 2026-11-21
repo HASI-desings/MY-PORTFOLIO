@@ -48,7 +48,6 @@ export default function Experience() {
   const mode = useMode();
   const tier = useExperience((s) => s.tier);
   const webglLost = useExperience((s) => s.webglLost);
-  const activeScene = useExperience((s) => s.activeScene);
   useNetworkNotices();
 
   // Layout effect: runs before any child's passive effect, so the loader's manifest
@@ -85,13 +84,6 @@ export default function Experience() {
     document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, [mode]);
-
-  // The final scene is lit (D-014): chrome turns obsidian there.
-  useEffect(() => {
-    const root = document.documentElement;
-    if (mode === "cine" && activeScene === "final") root.dataset.chrome = "light";
-    else delete root.dataset.chrome;
-  }, [mode, activeScene]);
 
   // Tab hidden → pause smooth scroll and CSS loops; the canvas pauses itself.
   useEffect(() => {
