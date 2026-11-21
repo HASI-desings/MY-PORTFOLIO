@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { loadGsap } from "@/lib/gsap";
 import { isCinematic } from "@/lib/a11y";
 import { useSceneTimeline } from "@/hooks/useScene";
 import { useThreeEnabled } from "@/hooks/useTier";
+import { cn } from "@/lib/utils";
 import { useExperience } from "@/store/experience";
 import SceneShell from "../SceneShell";
 import LettersFallback from "./LettersFallback";
@@ -28,6 +29,14 @@ export default function Scene01Identity() {
   const planeRef = useRef<HTMLDivElement>(null);
   const planeWrapRef = useRef<HTMLDivElement>(null);
   const introPlayed = useRef(false);
+  // 3D was on when the arrival played, then the tier dropped (FPS guard / context loss):
+  // the DOM plane appears already in place instead of waiting for an arrival that is over.
+  const [lateLite, setLateLite] = useState(false);
+  const [prevThree, setPrevThree] = useState(three);
+  if (prevThree !== three) {
+    setPrevThree(three);
+    if (!three && loaderState === "done") setLateLite(true);
+  }
   const threeRef = useRef(three);
   useEffect(() => {
     threeRef.current = three;
@@ -106,7 +115,7 @@ export default function Scene01Identity() {
       {!three ? (
         // The wrapper takes the scroll move; the plane keeps its own diagonal transform.
         <div ref={planeWrapRef} aria-hidden="true" className="absolute inset-0">
-          <div ref={planeRef} className="identity-plane" />
+          <div ref={planeRef} className={cn("identity-plane", lateLite && "is-revealed")} />
         </div>
       ) : null}
       <LettersFallback

@@ -641,6 +641,38 @@ html.cine .identity-plane {
   --reveal: 0;
 }
 
+/* Plane mounted after the arrival already played (tier dropped to lite): show it whole. */
+html.cine .identity-plane.is-revealed {
+  --reveal: 1;
+}
+
+/* Short screens (landscape phones, 200 % zoom): HASI takes the upper half, the name plate
+   the lower — they never overlap (Design.md §13). */
+@media (max-height: 499px) {
+  .hasi-slot-wrap {
+    bottom: 50% !important;
+  }
+
+  .hasi-slot-wrap [data-hasi-slot] {
+    font-size: min(var(--fs-mega), 36svh) !important;
+  }
+
+  [data-intro] {
+    bottom: calc(50px + var(--safe-bottom)) !important; /* clears the Instagram link */
+    gap: 6px !important;
+    padding: 12px 16px !important;
+  }
+
+  [data-intro] h1 {
+    font-size: 1.35rem !important;
+  }
+
+  [data-intro] p:last-child {
+    font-size: 0.95rem !important;
+    line-height: 1.35 !important;
+  }
+}
+
 /* ───────────────────────── Scene 02 · 2.5D toolkit ───────────────────────── */
 .tk-field {
   --tile: clamp(52px, min(12.5vw, 10svh), 92px);
