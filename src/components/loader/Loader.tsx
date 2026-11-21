@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { site } from "@/content/site";
 import { loadGsap } from "@/lib/gsap";
 import { manifestFor, runPreload } from "@/lib/preload";
@@ -10,6 +10,7 @@ import { useMode } from "@/hooks/useReducedMotion";
 import SlowNotice from "./SlowNotice";
 
 const MIN_VISIBLE_MS = 1200;
+const noopSubscribe = () => () => undefined;
 
 /**
  * The loader (Design.md §9): HASI as a 1px outline that fills with ice from the bottom as
@@ -34,7 +35,9 @@ export default function Loader() {
   const shown = useRef(0);
   const [ready, setReady] = useState(false);
   const [gone, setGone] = useState(false);
-  const [slow] = useState(() => (typeof navigator === "undefined" ? false : connectionIsSlow()));
+  // Read after hydration (server snapshot = false) so the first client render matches the
+  // server HTML even on slow connections.
+  const slow = useSyncExternalStore(noopSubscribe, connectionIsSlow, () => false);
   const startedAt = useRef(0);
   const exiting = useRef(false);
 

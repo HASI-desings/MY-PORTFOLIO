@@ -1319,3 +1319,15 @@ html.cine .final-cta {
   transform-origin: 0 50%;
   transform: translateY(-50%) rotate(-18deg);
 }
+
+/* Before JavaScript arrives: the slow-load note appears on its own after 6 s. */
+.slow-css {
+  opacity: 0;
+  animation: slow-css-in 0.6s ease 6s forwards;
+}
+
+@keyframes slow-css-in {
+  to {
+    opacity: 1;
+  }
+}
