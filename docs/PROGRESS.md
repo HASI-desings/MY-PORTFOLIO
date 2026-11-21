@@ -69,3 +69,8 @@
 
 ### Phase 14
 - `docs/QA_REPORT.md` (real results only), README (run, edit content, add a project, scripts, deploy). Not deployed.
+
+### Final verification
+- Clean run from the repository state: `npm ci` → `npm run lint` → `npm run typecheck` → `npm run build` all pass; `npm audit` 0 vulnerabilities.
+- Repository holds 139 tracked files; no `.env`, `node_modules`, build output or video frames. `Video.mp4` stays only in `_brief/assets/` and is never served.
+- Committed and pushed to `main`. **Not deployed** (owner deploys on Vercel).
