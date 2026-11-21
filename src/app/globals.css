@@ -1,8 +1,478 @@
 @import "tailwindcss";
 
-/* Design tokens arrive in Phase 4. Until then: never a white frame. */
-html,
-body {
-  background: #111217;
-  color: #dfe5eb;
+/* Content lives in TS/TSX and docs; the brief is not part of the CSS build. */
+@source not "../../_brief";
+@source not "../../docs";
+
+/* ───────────────────────── Tokens (Design.md §2–§7) ─────────────────────────
+   Mirrored for JS/GSAP/three in src/lib/tokens.ts — change both together. */
+:root {
+  /* Core palette */
+  --obsidian: #111217;
+  --ice: #dfe5eb;
+  --red: #ef233c;
+
+  /* Derived neutrals */
+  --obsidian-900: #0b0c10;
+  --obsidian-800: #16171d;
+  --obsidian-700: #1e2028;
+  --graphite: #2b2e36;
+  --ice-60: rgb(223 229 235 / 0.6);
+  --ice-30: rgb(223 229 235 / 0.3);
+  --ice-10: rgb(223 229 235 / 0.1);
+  --red-deep: #b8172b;
+  --red-glow: rgb(239 35 60 / 0.35);
+
+  /* Scene 06 studio backdrop, measured from ME.png (DECISIONS D-014 / D-016).
+     Neutral greys from the photo itself — not a new hue. */
+  --studio-core: #fcfcfc;
+  --studio-40: #fbfbfb;
+  --studio-50: #e9e9e9;
+  --studio-60: #cacaca;
+  --studio-70: #a5a5a5;
+  --studio-80: #828282;
+  --studio-edge: #727272;
+
+  /* Fluid type scale */
+  --fs-mega: clamp(6rem, 28vw, 32rem);
+  --fs-giant: clamp(3rem, 11vw, 12rem);
+  --fs-h1: clamp(2.25rem, 6vw, 5.5rem);
+  --fs-h2: clamp(1.5rem, 3.2vw, 2.75rem);
+  --fs-body-l: clamp(1.05rem, 1.4vw, 1.35rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-micro: 0.75rem;
+
+  /* Layout */
+  --gutter: clamp(16px, 2vw, 32px);
+  --margin: clamp(20px, 5vw, 96px);
+  --content-max: 1760px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --edge-x: max(var(--margin), var(--safe-left));
+  --edge-x-r: max(var(--margin), var(--safe-right));
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --dur-micro: 180ms;
+  --dur-short: 320ms;
+  --dur-med: 600ms;
+  --dur-long: 900ms;
+  --dur-cine: 1400ms;
+
+  /* Z-index map (Design.md §5) */
+  --z-canvas: 0;
+  --z-cut: 5;
+  --z-scene: 10;
+  --z-scene-fg: 20;
+  --z-chrome: 50;
+  --z-panel: 80;
+  --z-contact: 90;
+  --z-loader: 100;
+  --z-grain: 110;
+  --z-cursor: 120;
+
+  /* Chrome colours flip on the lit final scene (D-014). */
+  --chrome-fg: var(--ice);
+  --chrome-fg-dim: var(--ice-60);
+  --chrome-fg-faint: var(--ice-30);
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --ice-60: var(--ice);
+    --ice-10: rgb(223 229 235 / 0.3);
+    --chrome-fg-dim: var(--ice);
+  }
+}
+
+/* ───────────────────────── Tailwind theme ───────────────────────── */
+@theme inline {
+  --color-obsidian: var(--obsidian);
+  --color-obsidian-900: var(--obsidian-900);
+  --color-obsidian-800: var(--obsidian-800);
+  --color-obsidian-700: var(--obsidian-700);
+  --color-graphite: var(--graphite);
+  --color-ice: var(--ice);
+  --color-ice-60: var(--ice-60);
+  --color-ice-30: var(--ice-30);
+  --color-ice-10: var(--ice-10);
+  --color-red: var(--red);
+  --color-red-deep: var(--red-deep);
+
+  --font-display: var(--font-archivo), "Arial Narrow", system-ui, sans-serif;
+  --font-sans: var(--font-geist), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --ease-out: var(--ease-out);
+  --ease-in-out: var(--ease-in-out);
+  --ease-in: var(--ease-in);
+}
+
+/* Breakpoints (Design.md §13). Tailwind min-width screens. */
+@theme {
+  --breakpoint-xs: 380px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 1024px;
+  --breakpoint-lg: 1440px;
+  --breakpoint-xl: 1920px;
+}
+
+@custom-variant short (@media (max-height: 499px));
+@custom-variant fine (@media (hover: hover) and (pointer: fine));
+
+/* ───────────────────────── Base ───────────────────────── */
+@layer base {
+  html {
+    background: var(--obsidian);
+    color: var(--ice);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    background: var(--obsidian);
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--red);
+    color: var(--obsidian);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--red);
+    outline-offset: 4px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  img,
+  svg,
+  canvas {
+    display: block;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+}
+
+/* ───────────────────────── Type roles ───────────────────────── */
+@layer components {
+  .t-display {
+    font-family: var(--font-display);
+    font-weight: 850;
+    font-stretch: 120%;
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
+    line-height: 0.86;
+  }
+
+  /* HASI: the exact instance the 3D letters are built from (wght 900 · wdth 125). */
+  .t-hasi {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-stretch: 125%;
+    font-variation-settings:
+      "wght" 900,
+      "wdth" 125;
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
+    line-height: 0.82;
+  }
+
+  .t-condensed {
+    font-family: var(--font-display);
+    font-weight: 850;
+    font-stretch: 70%;
+    font-variation-settings:
+      "wght" 850,
+      "wdth" 70;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    word-spacing: 0.12em;
+    line-height: 0.88;
+  }
+
+  .t-mono {
+    font-family: var(--font-mono);
+    font-size: var(--fs-micro);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Mask rise primitive: inner rises from below its own line box. */
+  .mask-line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.06em;
+    margin-bottom: -0.06em;
+  }
+
+  .mask-line__inner {
+    display: block;
+    will-change: transform;
+  }
+
+  .letter {
+    display: inline-block;
+    transform-origin: 50% 100%;
+    backface-visibility: hidden;
+  }
+
+  .word {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  /* Hairline underline that draws left → right on hover/focus (chrome links). */
+  .draw-line {
+    position: relative;
+  }
+
+  .draw-line::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 1px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition: transform var(--dur-short) var(--ease-out);
+  }
+
+  .draw-line:hover::after,
+  .draw-line:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  /* ── Button (Design.md §10) ── */
+  .btn {
+    --btn-fg: var(--ice);
+    --btn-bd: var(--ice-30);
+    --btn-bg: transparent;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0 20px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--btn-fg);
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-bd);
+    border-radius: 0;
+    transition:
+      color var(--dur-micro) var(--ease-out),
+      border-color var(--dur-micro) var(--ease-out),
+      background-color var(--dur-micro) var(--ease-out),
+      transform var(--dur-short) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  .btn--lg {
+    min-height: 56px;
+    padding: 0 28px;
+  }
+
+  .btn__label,
+  .btn__icon {
+    display: inline-flex;
+    transition: transform var(--dur-short) var(--ease-out);
+  }
+
+  .btn--outline:hover {
+    --btn-bd: var(--red);
+  }
+
+  .btn--outline:hover .btn__label {
+    transform: translateX(4px);
+  }
+
+  .btn--primary {
+    --btn-fg: var(--obsidian);
+    --btn-bd: var(--red);
+    --btn-bg: var(--red);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    border-radius: 2px;
+  }
+
+  .btn--primary:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn--primary:active {
+    --btn-bg: var(--red-deep);
+    --btn-bd: var(--red-deep);
+    transform: translateY(1px);
+  }
+
+  .btn--ghost {
+    --btn-bd: transparent;
+    padding: 0 12px;
+  }
+
+  .btn--ghost:hover {
+    --btn-fg: var(--ice);
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn:focus-visible {
+    outline: 2px solid var(--ice);
+    outline-offset: 4px;
+  }
+
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .btn.is-loading .btn__dots {
+    animation: btn-pulse 1s var(--ease-in-out) infinite;
+  }
+
+  .btn.is-success {
+    --btn-bd: var(--ice);
+  }
+
+  .btn.is-error {
+    --btn-bd: var(--red);
+    box-shadow: inset 0 -1px 0 var(--red);
+  }
+
+  @keyframes btn-pulse {
+    50% {
+      opacity: 0.25;
+    }
+  }
+
+  /* Gradient scrim behind body text over 3D (Security.md §8). */
+  .scrim-bl {
+    background: radial-gradient(
+      120% 90% at 0% 100%,
+      rgb(17 18 23 / 0.92) 0%,
+      rgb(17 18 23 / 0.6) 45%,
+      rgb(17 18 23 / 0) 75%
+    );
+  }
+}
+
+/* ───────────────────────── Experience modes ─────────────────────────
+   html.cine   → JS on, motion allowed: fixed stage, scroll-driven scenes.
+   html.static → no JS / reduced motion: scenes stack as readable sections.
+   An inline script in <head> picks the mode before first paint. */
+.stage-root {
+  position: relative;
+}
+
+html.cine .stage-root {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  height: 100svh;
+}
+
+html.cine .scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+html:not(.cine) .scene {
+  position: relative;
+  min-height: 100svh;
+  overflow: clip;
+}
+
+html:not(.cine) .cine-only {
+  display: none !important;
+}
+
+html.cine .static-only {
+  display: none !important;
+}
+
+/* Static mode: soft entrance only (Design.md §11). */
+html.static .reveal {
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+html.static .reveal.is-in {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+
+  html.static .reveal {
+    transition: opacity 400ms ease;
+  }
+}
+
+/* No JavaScript: nothing waits for an animation to be revealed. */
+html:not(.js) .reveal {
+  opacity: 1;
 }

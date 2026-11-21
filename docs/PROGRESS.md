@@ -6,7 +6,7 @@
 | 1 | Study & confirm | ✅ Done · ⛔ Stop 1 approved | `docs/REFERENCE_ANALYSIS.md`, `docs/DECISIONS.md`, `scripts/extract-reference-frames.sh` |
 | 2 | Project setup | ✅ Done | Next.js 16.4.6, React 19.3.1, full tree stubbed; build/lint/typecheck pass |
 | 3 | Assets pipeline | ✅ Done | Owner waived the remaining stops: build straight through |
-| 4 | Design system & tokens | — | |
+| 4 | Design system & tokens | ✅ Done | `/styleguide` verified (removed in Phase 12) |
 | 5 | Core engine | — | |
 | 6 | Scene 01 · Identity | — | ⛔ Stop 3 (look test) |
 | 7 | Scene 02 · Toolkit | — | |
@@ -46,3 +46,11 @@
 - 3D typeface `public/fonts/archivo-black.typeface.json` (14 KB) + OG font subsets (D-017). Verified in three.js: "HASI" → 4,380-vertex extruded geometry.
 - `public/textures/grain.png` (31 KB), `public/favicon.svg` (Archivo H, ice on obsidian, red corner cut).
 - `scripts/capture-screenshots.mjs` ready for future LIVE projects (verified: reports nothing to capture).
+
+### Phase 4
+- Tokens in `globals.css` (palette, measured studio backdrop, fluid type, layout, motion, z-map, contrast rules) mirrored in `lib/tokens.ts`; Tailwind v4 `@theme` with Design.md §13 breakpoints + `short` / `fine` variants.
+- Fonts via `next/font/google`: Archivo (variable weight + width), Geist, Geist Mono — self-hosted, swap.
+- Experience modes chosen before first paint by an inline script: `cine` (scroll-driven stage) or `static` (reduced motion); no JS → readable stacked page.
+- Primitives: `Button` (all §10 states), `Panel` (focus trap, Esc, ×, outside click, back gesture, focus return), `MaskText`, `SplitLetters`, `MonoLabel`, `Toast`.
+- Content files filled from App.md / Design.md; shared store `store/experience.ts`.
+- **Verified:** typecheck ✓ lint ✓ build ✓; `/styleguide` screenshot at 1440 px — tokens, type roles and every button state render; no console errors.
