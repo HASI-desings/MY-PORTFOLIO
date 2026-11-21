@@ -972,8 +972,25 @@ html:not(.cine) .final-statement {
   right: auto;
 }
 
+/* Static: the second statement is read by screen readers here, shown above the CTA instead. */
 html:not(.cine) .final-statement + .final-statement {
-  font-size: min(calc(var(--fs-giant) * 0.6), 8vw);
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.final-static-line {
+  z-index: 5;
+  top: calc(78svh - 32px - 1.6em);
+  font-size: calc(var(--pw) * 0.074); /* fits across the shoulders, on the dark shirt */
+}
+
+@media (max-width: 639px) {
+  .final-static-line {
+    top: calc(72svh - 28px - 1.6em);
+  }
 }
 
 .final-cta {
@@ -1257,4 +1274,16 @@ html.cine .final-cta {
   50% {
     opacity: 0.25;
   }
+}
+
+/* ───────────────────────── Status pages ───────────────────────── */
+.status-plane {
+  position: absolute;
+  left: 48%;
+  top: calc(100% + 4svh);
+  width: 120vmax;
+  height: 22svh;
+  background: var(--red);
+  transform-origin: 0 50%;
+  transform: translateY(-50%) rotate(-18deg);
 }

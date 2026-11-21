@@ -26,6 +26,7 @@ export default function Scene01Identity() {
   const nameRef = useRef<HTMLDivElement>(null);
   const lettersRef = useRef<HTMLDivElement>(null);
   const planeRef = useRef<HTMLDivElement>(null);
+  const planeWrapRef = useRef<HTMLDivElement>(null);
   const introPlayed = useRef(false);
   const threeRef = useRef(three);
   useEffect(() => {
@@ -85,9 +86,9 @@ export default function Scene01Identity() {
         0.35,
       );
     }
-    if (planeRef.current) {
+    if (planeWrapRef.current) {
       tl.fromTo(
-        planeRef.current,
+        planeWrapRef.current,
         { x: 0, y: 0 },
         { x: 0.02 * ctx.vw, y: 0.05 * ctx.vh, ease: "power2.inOut", duration: 0.65 },
         0.35,
@@ -97,7 +98,12 @@ export default function Scene01Identity() {
 
   return (
     <SceneShell id="identity" label="Identity">
-      {!three ? <div ref={planeRef} aria-hidden="true" className="identity-plane" /> : null}
+      {!three ? (
+        // The wrapper takes the scroll move; the plane keeps its own diagonal transform.
+        <div ref={planeWrapRef} aria-hidden="true" className="absolute inset-0">
+          <div ref={planeRef} className="identity-plane" />
+        </div>
+      ) : null}
       <LettersFallback
         ref={lettersRef}
         flatHidden={three && lettersReady}

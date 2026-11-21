@@ -1,6 +1,9 @@
 "use client";
 
-// Branded error screen is designed in Phase 12 (Security.md §6).
+import StatusPage from "@/components/ui/StatusPage";
+import { rememberLite } from "@/lib/tier";
+
+/** Route-level error boundary (Security.md §6). No stack traces for visitors. */
 export default function Error({
   reset,
 }: {
@@ -8,11 +11,25 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <main>
-      <h1>Something broke.</h1>
-      <button type="button" onClick={() => reset()}>
-        Retry
+    <StatusPage
+      ghost="ERR"
+      title="SOMETHING BROKE."
+      line="The experience hit an error. You can retry or continue with the lite version."
+    >
+      <button type="button" className="btn btn--primary btn--lg" onClick={() => reset()}>
+        <span className="btn__label">RETRY</span>
       </button>
-    </main>
+      <button
+        type="button"
+        className="btn btn--outline btn--lg"
+        onClick={() => {
+          // The boundary remounts the page, which re-detects the tier as lite.
+          rememberLite();
+          reset();
+        }}
+      >
+        <span className="btn__label">LITE VERSION</span>
+      </button>
+    </StatusPage>
   );
 }

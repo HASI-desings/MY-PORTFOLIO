@@ -27,3 +27,9 @@ export function seeded(seed: number) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
+
+/** Absolute site URL for metadata, OG and sitemap. Vercel provides the production host. */
+export function siteUrl() {
+  const host = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  return host ? `https://${host}` : "http://localhost:3000";
+}

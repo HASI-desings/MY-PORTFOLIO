@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Geist, Geist_Mono } from "next/font/google";
 import { site } from "@/content/site";
+import { siteUrl } from "@/lib/utils";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -16,15 +17,11 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : "http://localhost:3000";
-
 const description = site.statement;
 const title = `${site.brand} — ${site.name.replace(/\b(\w)(\w*)/g, (_, a: string, b: string) => a + b.toLowerCase())}`;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(siteUrl()),
   title,
   description,
   applicationName: site.brand,

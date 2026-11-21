@@ -68,21 +68,29 @@ export default function Experience() {
     if (mode === "cine") return startDirector();
   }, [mode]);
 
-  // Static mode: soft 400 ms fades as sections arrive (Design.md §11).
+  // Static mode: soft 400 ms fades as sections arrive (Design.md §11). Checked against the
+  // scroll position (not IntersectionObserver), so fast scrolls and jumps never skip one.
   useEffect(() => {
     if (mode !== "static") return;
-    const io = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("is-in");
-            io.unobserve(e.target);
-          }
-        }),
-      { rootMargin: "0px 0px -10% 0px" },
-    );
-    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    let raf = 0;
+    const check = () => {
+      raf = 0;
+      const limit = window.innerHeight * 0.92;
+      document.querySelectorAll<HTMLElement>(".reveal:not(.is-in)").forEach((el) => {
+        if (el.getBoundingClientRect().top < limit) el.classList.add("is-in");
+      });
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(check);
+    };
+    check();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, [mode]);
 
   // Tab hidden → pause smooth scroll and CSS loops; the canvas pauses itself.

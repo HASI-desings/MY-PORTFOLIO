@@ -156,6 +156,14 @@ export default function Scene06Final() {
 
       <Portrait ref={portraitRef} />
 
+      {/* Static / reduced motion: the second statement sits over the shirt, above the CTA. */}
+      <p
+        aria-hidden="true"
+        className="static-only final-static-line t-condensed absolute inset-x-0 text-center text-ice"
+      >
+        {STATEMENT_LINES[1].join(" ")}
+      </p>
+
       <div
         ref={ctaWrapRef}
         className="final-cta absolute inset-x-0 flex justify-center px-[var(--edge-x)]"
