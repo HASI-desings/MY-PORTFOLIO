@@ -27,7 +27,7 @@ export default function ScrollCue() {
       )}
       style={{ bottom: "calc(20px + var(--safe-bottom))", zIndex: "var(--z-chrome)" }}
     >
-      <span className="t-mono text-[11px] text-[color:var(--chrome-fg-dim)]">
+      <span className="chrome-chip t-mono text-[11px] text-[color:var(--chrome-fg-dim)]">
         {touch ? chrome.swipe : chrome.scroll}
       </span>
       <span className="scroll-cue-line relative block h-8 w-px overflow-hidden bg-[color:var(--chrome-fg-faint)]" />

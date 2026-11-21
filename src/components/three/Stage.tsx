@@ -160,6 +160,9 @@ function LabelAnchor() {
  */
 export default function Stage() {
   const tier = useExperience((s) => s.tier);
+  // Behind the opaque loader one frame is enough (it compiles the shaders); full-rate
+  // rendering starts with the handoff.
+  const behindLoader = useExperience((s) => s.loaderState === "loading");
   const setWebglLost = useExperience((s) => s.setWebglLost);
   const visible = usePageVisible();
   const [onScreen, setOnScreen] = useState(true);
@@ -180,7 +183,7 @@ export default function Stage() {
         className="!absolute inset-0"
         aria-hidden="true"
         dpr={[1, settings.dpr]}
-        frameloop={visible && onScreen ? "always" : "never"}
+        frameloop={!visible || !onScreen ? "never" : behindLoader ? "demand" : "always"}
         gl={{
           antialias: tier === "high",
           powerPreference: "high-performance",

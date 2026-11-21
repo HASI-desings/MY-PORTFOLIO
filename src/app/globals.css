@@ -485,7 +485,23 @@ html:not(.js) .reveal {
 }
 
 /* Lit final scene: chrome turns obsidian over the studio backdrop (D-014). */
+/* Small chrome labels that can sit over a red diagonal get an obsidian plate (≥ 4.5:1). */
+.chrome-chip {
+  padding-inline: 6px;
+  margin-inline: -6px;
+  background: var(--chrome-plate, var(--obsidian));
+  transition: background-color var(--dur-short) var(--ease-out);
+}
+
+/* The scene rail sits on a small obsidian plate: the red diagonals pass behind it. */
+.scene-rail {
+  padding: 4px 6px 4px 0;
+  background: var(--chrome-plate, var(--obsidian));
+  transition: background-color var(--dur-short) var(--ease-out);
+}
+
 html[data-chrome="light"] {
+  --chrome-plate: transparent;
   --chrome-fg: var(--obsidian);
   --chrome-fg-dim: rgb(17 18 23 / 0.62);
   --chrome-fg-faint: rgb(17 18 23 / 0.32);

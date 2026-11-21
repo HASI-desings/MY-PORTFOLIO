@@ -12,9 +12,9 @@ export default function InstagramLink() {
       href={site.contact.instagramUrl}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`Instagram @${site.contact.instagramHandle} (opens in a new tab)`}
+      aria-label={`IG / @${site.contact.instagramHandle} — Instagram (opens in a new tab)`}
       className={cn(
-        "chrome-fade t-mono group fixed flex min-h-[44px] items-center gap-2 text-[11px] text-[color:var(--chrome-fg-dim)] transition-colors duration-[var(--dur-micro)] hover:text-[color:var(--chrome-fg)]",
+        "chrome-fade chrome-chip t-mono group fixed flex min-h-[44px] items-center gap-2 text-[11px] text-[color:var(--chrome-fg-dim)] transition-colors duration-[var(--dur-micro)] hover:text-[color:var(--chrome-fg)]",
         loaded ? "opacity-100" : "pointer-events-none opacity-0",
       )}
       style={{

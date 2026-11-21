@@ -34,7 +34,7 @@ export default function SceneIndex() {
         )}
         style={{ right: "calc(var(--edge-x-r) * 0.5)", zIndex: "var(--z-chrome)" }}
       >
-        <ol className="flex flex-col items-end">
+        <ol className="scene-rail flex flex-col items-end">
           {scenes.map((id, i) => {
             const isActive = id === active;
             return (
@@ -48,7 +48,7 @@ export default function SceneIndex() {
                     "t-mono group flex min-h-[32px] min-w-[44px] items-center justify-end gap-2 text-[11px] transition-colors duration-[var(--dur-short)]",
                     isActive
                       ? "text-[color:var(--chrome-fg)]"
-                      : "text-[color:var(--chrome-fg-faint)] hover:text-[color:var(--chrome-fg)]",
+                      : "text-[color:var(--chrome-fg-dim)] hover:text-[color:var(--chrome-fg)]",
                   )}
                 >
                   <span

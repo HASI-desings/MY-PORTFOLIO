@@ -45,17 +45,19 @@ function ToastRow({ item }: { item: ToastItem }) {
 export default function Toast() {
   const toasts = useExperience((s) => s.toasts);
   return (
-    <ol
+    <div
       role="status"
       aria-live="polite"
-      className="pointer-events-none fixed inset-x-0 z-[var(--z-panel)] mx-auto flex w-max max-w-[calc(100vw-32px)] flex-col items-center gap-2"
+      className="pointer-events-none fixed inset-x-0 z-[var(--z-panel)] mx-auto w-max max-w-[calc(100vw-32px)]"
       style={{ bottom: "calc(72px + var(--safe-bottom))" }}
     >
-      <AnimatePresence initial={false}>
-        {toasts.map((t) => (
-          <ToastRow key={t.id} item={t} />
-        ))}
-      </AnimatePresence>
-    </ol>
+      <ol className="flex flex-col items-center gap-2">
+        <AnimatePresence initial={false}>
+          {toasts.map((t) => (
+            <ToastRow key={t.id} item={t} />
+          ))}
+        </AnimatePresence>
+      </ol>
+    </div>
   );
 }
