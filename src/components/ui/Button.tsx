@@ -19,6 +19,21 @@ type AsButton = Common &
 type AsLink = Common &
   Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "children"> & { href: string; external?: boolean };
 
+const OWN_PROPS = new Set([
+  "variant",
+  "size",
+  "state",
+  "icon",
+  "className",
+  "children",
+  "external",
+]);
+
+/** Everything except the Button's own props, safe to spread onto the DOM element. */
+function domProps(props: object) {
+  return Object.fromEntries(Object.entries(props).filter(([k]) => !OWN_PROPS.has(k)));
+}
+
 /**
  * One button for the whole site, with every state from Design.md §10: default, hover,
  * focus-visible, pressed, disabled, loading ("…" pulse), success, error. Renders a real <a>
@@ -49,20 +64,10 @@ export default function Button(props: AsButton | AsLink) {
   );
 
   if (typeof props.href === "string") {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- strip non-DOM props
-    const {
-      variant: _v,
-      size: _s,
-      state: _st,
-      icon: _i,
-      className: _c,
-      children: _ch,
-      external,
-      ...rest
-    } = props;
+    const external = props.external;
     return (
       <a
-        {...rest}
+        {...(domProps(props) as AnchorHTMLAttributes<HTMLAnchorElement>)}
         className={classes}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         aria-busy={state === "loading" || undefined}
@@ -72,20 +77,10 @@ export default function Button(props: AsButton | AsLink) {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- strip non-DOM props
-  const {
-    variant: _v,
-    size: _s,
-    state: _st,
-    icon: _i,
-    className: _c,
-    children: _ch,
-    ...rest
-  } = props;
   return (
     <button
       type="button"
-      {...rest}
+      {...(domProps(props) as ButtonHTMLAttributes<HTMLButtonElement>)}
       className={classes}
       aria-busy={state === "loading" || undefined}
     >
