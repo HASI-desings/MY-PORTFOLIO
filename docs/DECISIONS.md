@@ -58,3 +58,20 @@
 
 ### D-013 · Tailwind configuration — DECIDED
 - Current Tailwind (v4) is configured in CSS (`@theme` in `globals.css`) rather than `tailwind.config.ts`. This matches Rules.md §4.3 ("tokens only in `globals.css` + `lib/tokens.ts`"), so `tailwind.config.ts` from Structure.md is not created. Breakpoints from Design.md §13 are defined in the same `@theme` block.
+
+### D-014 · Scene 06 backdrop = the photo's own backdrop — OWNER
+- **Owner's direction:** in the final scene, the page background must be exactly the same as ME.png's background, with some creativity.
+- **How:** the photo's studio backdrop (bright glow behind the head, falling off to darker grey at the edges) is **measured from the image** and recreated as a resolution-independent gradient that fills any screen size. The cutout portrait sits on it, so the edges blend seamlessly.
+- **Why the cutout is still made:** the giant statements sit *between* the backdrop and his head/shoulders (Design.md §9 Scene 06). That layering only works with a transparent portrait.
+- **The creative idea:** five scenes in a dark obsidian room, then the RED CUT sweeps and the room **lights up** — the creator stands in his own light. The palette flip happens only here, which makes the reveal unmistakable.
+- Type and red on the light backdrop (statement colour, rim, diagonal) are designed in Phase 11 and shown at that stop. The backdrop's greys are neutral tones, not a new hue.
+
+### D-015 · Next.js 16 configuration — DECIDED
+- `cacheComponents` / `partialPrefetching` **off**: with them on, an empty `generateStaticParams` is a build error (Next 16 docs), and the projects list ships empty. The site is fully static, so they add nothing.
+- `agentRules: false`: otherwise `next dev` writes an `AGENTS.md` into the repo (not in Structure.md).
+- Bundle analysis uses the built-in **`next analyze`** (Turbopack). `@next/bundle-analyzer` only works with webpack builds, so it is not installed (Rules.md §4.4 — no unused dependencies).
+- Tailwind runs through the `@tailwindcss/turbopack` loader that `create-next-app` sets up, so no `postcss.config.mjs` is needed.
+- `npm run typecheck` runs `next typegen` first, because `LayoutProps` / `PageProps` are generated route types.
+- `playwright` is pinned to **1.63.0**, the version of the browser preinstalled in this environment.
+- Favicon: static `public/favicon.svg` (Structure.md allows "or static favicon"), so `app/icon.tsx` is not created.
+- `sitemap.ts` and `opengraph-image.tsx` are created in Phase 12 with the designed OG image and the production URL; `manifest.ts` and `robots.ts` exist now.

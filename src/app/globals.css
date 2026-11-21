@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+/* Design tokens arrive in Phase 4. Until then: never a white frame. */
+html,
+body {
+  background: #111217;
+  color: #dfe5eb;
+}

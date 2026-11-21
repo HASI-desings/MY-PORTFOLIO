@@ -1,0 +1,35 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+/build
+next-env.d.ts
+*.tsbuildinfo
+
+# testing & playwright artifacts
+/coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# local scratch — reference frames and temp output are never committed
+/tmp/
+
+# env & secrets
+.env*
+*.pem
+
+# python
+__pycache__/
+*.pyc
+.venv/
+
+# misc
+.DS_Store
+npm-debug.log*
+.vercel

@@ -4,8 +4,8 @@
 |---|---|---|---|
 | 0 | Wipe & prepare | ✅ Done | Only `_brief/` (8 spec files + `Video.mp4` + `ME.png`) remains. Pushed. |
 | 1 | Study & confirm | ✅ Done · ⛔ Stop 1 approved | `docs/REFERENCE_ANALYSIS.md`, `docs/DECISIONS.md`, `scripts/extract-reference-frames.sh` |
-| 2 | Project setup | ⏳ In progress | |
-| 3 | Assets pipeline | — | ⛔ Stop 2 |
+| 2 | Project setup | ✅ Done | Next.js 16.4.6, React 19.3.1, full tree stubbed; build/lint/typecheck pass |
+| 3 | Assets pipeline | ⏳ In progress | ⛔ Stop 2 |
 | 4 | Design system & tokens | — | |
 | 5 | Core engine | — | |
 | 6 | Scene 01 · Identity | — | ⛔ Stop 3 (look test) |
@@ -30,3 +30,12 @@
 - Studied `Video.mp4`: 69 frames at 2 fps, 9 contact sheets, 14 monitor-only crops; watched at full speed for rhythm. Frames stay in the session scratchpad, not committed.
 - Verified spec facts against live sources: Simple Icons slugs (2 missing), network access for Phase 3.
 - Stop 1 answers: Design.md wins on red for its red screens · push to `main` · the featured toolkit object is removed from site and repo · no projects displayed for now (DECISIONS D-001, D-003, D-004, D-012).
+
+### Phase 2
+- Scaffolded with `create-next-app@16.4.6` (TypeScript, App Router, Tailwind v4, ESLint, `src/`, `@/*`), moved into the repo.
+- Installed (exact versions): next 16.4.6, react/react-dom 19.3.1, three 0.187.0, @react-three/fiber 9.8.2, @react-three/drei 10.7.9, gsap 3.15.1, lenis 1.3.27, framer-motion 14.14.0, zustand 5.1.0, simple-icons 16.38.0, lucide-react 1.77.0. Dev: typescript 5.9.3, eslint 9 + eslint-config-next, tailwindcss 4.3.5, prettier 3.10.1, playwright 1.63.0, @types/three.
+- `npm audit`: 0 vulnerabilities.
+- Full Structure.md tree created (77 stubs that render nothing) + real `types/content.ts`, empty `content/projects.ts`, layout, page, loading, 404, error, global-error, manifest, robots, `/projects/[slug]`.
+- `next.config.ts`: Security.md §2 headers (CSP production-only), `poweredByHeader: false`, AVIF/WebP images.
+- `.gitignore`, `.nvmrc` (24), `.prettierrc`, CI workflow (lint → typecheck → build, no deploy), LICENSE, README.
+- **Verified:** `npm run lint` ✓ · `npm run typecheck` ✓ · `npm run build` ✓ (5 static routes) · `next start` serves all 7 security headers, no `X-Powered-By` · unknown `/projects/*` → 404 · Prettier clean.
