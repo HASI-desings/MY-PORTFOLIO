@@ -5,6 +5,7 @@
  *   fails is marked missing and the site continues with that component's fallback.
  */
 import type { Tier } from "@/store/experience";
+import { loadGsap } from "./gsap";
 import { tierSettings } from "./tier";
 
 export interface PreloadItem {
@@ -119,6 +120,12 @@ export function manifestFor(tier: Tier): PreloadItem[] {
       },
     },
   ];
+  // The scroll engine (GSAP, ScrollTrigger, Lenis) — needed by every tier.
+  items.push({
+    id: "motion",
+    weight: 10,
+    load: () => Promise.all([loadGsap(), import("lenis")]),
+  });
   const settings = tierSettings[tier];
   if (settings.three) {
     items.push(

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { getGsap } from "@/lib/gsap";
+import { loadGsap } from "@/lib/gsap";
 import { isCinematic } from "@/lib/a11y";
 import { useSceneTimeline } from "@/hooks/useScene";
 import { useThreeEnabled } from "@/hooks/useTier";
@@ -37,27 +37,32 @@ export default function Scene01Identity() {
   useEffect(() => {
     if (loaderState !== "done" || introPlayed.current || !isCinematic()) return;
     introPlayed.current = true;
-    const { gsap } = getGsap();
-    const ctx = gsap.context(() => {
-      if (planeRef.current) {
-        gsap.fromTo(
-          planeRef.current,
-          { "--reveal": 0 },
-          { "--reveal": 1, duration: 1.1, ease: "expo.out", delay: 0.15 },
-        );
-      }
-      const lines = nameRef.current?.querySelectorAll(".mask-line__inner");
-      if (lines?.length) {
-        gsap.fromTo(
-          lines,
-          { y: 0, yPercent: 110 },
-          { y: 0, yPercent: 0, duration: 0.9, ease: "expo.out", stagger: 0.12, delay: 0.25 },
-        );
-      }
+    let ctx: gsap.Context | null = null;
+    let cancelled = false;
+    loadGsap().then(({ gsap }) => {
+      if (cancelled) return;
+      ctx = gsap.context(() => {
+        if (planeRef.current) {
+          gsap.fromTo(
+            planeRef.current,
+            { "--reveal": 0 },
+            { "--reveal": 1, duration: 1.1, ease: "expo.out", delay: 0.15 },
+          );
+        }
+        const lines = nameRef.current?.querySelectorAll(".mask-line__inner");
+        if (lines?.length) {
+          gsap.fromTo(
+            lines,
+            { y: 0, yPercent: 110 },
+            { y: 0, yPercent: 0, duration: 0.9, ease: "expo.out", stagger: 0.12, delay: 0.25 },
+          );
+        }
+      });
     });
     return () => {
+      cancelled = true;
       introPlayed.current = false; // dev double-run: let the second run play it
-      ctx.kill();
+      ctx?.kill();
     };
   }, [loaderState]);
 

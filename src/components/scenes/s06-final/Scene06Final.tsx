@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import MaskText from "@/components/ui/MaskText";
 import { final } from "@/content/final";
 import { site } from "@/content/site";
-import { getGsap } from "@/lib/gsap";
+import { loadGsap } from "@/lib/gsap";
 import { mailtoUrl, whatsappUrl } from "@/lib/contact";
 import { useMode } from "@/hooks/useReducedMotion";
 import { useIsActive, useSceneProgress, useSceneTimeline } from "@/hooks/useScene";
@@ -48,14 +48,16 @@ export default function Scene06Final() {
   const showCta = useCallback((instant: boolean) => {
     if (ctaShown.current || !ctaWrapRef.current) return;
     ctaShown.current = true;
-    const { gsap } = getGsap();
-    if (instant) gsap.set(ctaWrapRef.current, { autoAlpha: 1, y: 0 });
-    else
-      gsap.fromTo(
-        ctaWrapRef.current,
-        { autoAlpha: 1, y: () => window.innerHeight * 0.4 },
-        { y: 0, duration: 0.9, ease: "expo.out" },
-      );
+    const el = ctaWrapRef.current;
+    loadGsap().then(({ gsap }) => {
+      if (instant) gsap.set(el, { autoAlpha: 1, y: 0 });
+      else
+        gsap.fromTo(
+          el,
+          { autoAlpha: 1, y: () => window.innerHeight * 0.4 },
+          { y: 0, duration: 0.9, ease: "expo.out" },
+        );
+    });
   }, []);
 
   useSceneProgress("final", (p) => {

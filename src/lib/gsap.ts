@@ -1,11 +1,20 @@
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import type { ScrollTrigger as ScrollTriggerType } from "gsap/ScrollTrigger";
 
-let registered = false;
+type Gsap = typeof import("gsap").gsap;
+type Modules = { gsap: Gsap; ScrollTrigger: typeof ScrollTriggerType };
 
-/** GSAP + ScrollTrigger, registered once, with the site's motion defaults. */
-export function getGsap() {
-  if (!registered && typeof window !== "undefined") {
+let modules: Modules | null = null;
+let loading: Promise<Modules> | null = null;
+
+/**
+ * GSAP + ScrollTrigger, fetched while the loader runs instead of in the first bundle
+ * (Rules.md §5.3) and registered once with the site's defaults.
+ */
+export function loadGsap(): Promise<Modules> {
+  if (modules) return Promise.resolve(modules);
+  loading ??= Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(([g, st]) => {
+    const { gsap } = g;
+    const { ScrollTrigger } = st;
     gsap.registerPlugin(ScrollTrigger);
     gsap.defaults({ ease: "none", duration: 1 });
     // Resizes are handled by the director (debounced, progress-preserving).
@@ -13,9 +22,16 @@ export function getGsap() {
       ignoreMobileResize: true,
       autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
     });
-    registered = true;
-  }
-  return { gsap, ScrollTrigger };
+    modules = { gsap, ScrollTrigger };
+    return modules;
+  });
+  return loading;
 }
 
-export { gsap, ScrollTrigger };
+/** The loaded modules. Only call once loadGsap() has resolved (the director guarantees it). */
+export function getGsap(): Modules {
+  if (!modules) throw new Error("GSAP not loaded yet");
+  return modules;
+}
+
+export const gsapReady = () => modules !== null;

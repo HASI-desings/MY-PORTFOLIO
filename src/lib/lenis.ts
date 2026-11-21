@@ -1,4 +1,4 @@
-import Lenis from "lenis";
+import type Lenis from "lenis";
 import { hasFinePointer } from "./a11y";
 import { getGsap } from "./gsap";
 
@@ -8,12 +8,13 @@ let tick: ((time: number) => void) | null = null;
 /**
  * Smooth wheel scrolling on desktop only (lerp 0.1 — weighty, never floaty). Touch keeps
  * native scrolling (Design.md §7). Driven by GSAP's ticker so Lenis and ScrollTrigger
- * share one frame clock.
+ * share one frame clock. Loaded with GSAP, after first paint.
  */
-export function startLenis() {
+export async function startLenis() {
   if (lenis || !hasFinePointer()) return lenis;
+  const { default: LenisCtor } = await import("lenis");
   const { gsap, ScrollTrigger } = getGsap();
-  lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+  lenis = new LenisCtor({ lerp: 0.1, smoothWheel: true });
   lenis.on("scroll", ScrollTrigger.update);
   tick = (time) => lenis?.raf(time * 1000);
   gsap.ticker.add(tick);
@@ -22,8 +23,7 @@ export function startLenis() {
 }
 
 export function stopLenis() {
-  const { gsap } = getGsap();
-  if (tick) gsap.ticker.remove(tick);
+  if (tick) getGsap().gsap.ticker.remove(tick);
   lenis?.destroy();
   lenis = null;
   tick = null;

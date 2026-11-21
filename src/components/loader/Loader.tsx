@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { site } from "@/content/site";
-import { getGsap } from "@/lib/gsap";
+import { loadGsap } from "@/lib/gsap";
 import { manifestFor, runPreload } from "@/lib/preload";
 import { connectionIsSlow } from "@/lib/tier";
 import { useExperience } from "@/store/experience";
@@ -73,8 +73,8 @@ export default function Loader() {
     return () => cancelAnimationFrame(raf);
   }, [ready]);
 
-  const runExit = () => {
-    const { gsap } = getGsap();
+  const runExit = async () => {
+    const { gsap } = await loadGsap();
     const letters = lettersRef.current;
     const slot = document.querySelector<HTMLElement>("[data-hasi-slot]");
     const tl = gsap.timeline({

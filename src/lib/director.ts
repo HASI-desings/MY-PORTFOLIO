@@ -11,7 +11,7 @@
  */
 import type { SceneId } from "@/store/experience";
 import { useExperience } from "@/store/experience";
-import { getGsap } from "./gsap";
+import { getGsap, gsapReady, loadGsap } from "./gsap";
 import { getLenis, scrollToY, startLenis } from "./lenis";
 import { clamp, easeInOutCubic } from "./utils";
 import { hasFinePointer } from "./a11y";
@@ -174,7 +174,7 @@ function queueBuild() {
 }
 
 function build() {
-  if (!document.documentElement.classList.contains("cine")) return;
+  if (!document.documentElement.classList.contains("cine") || !gsapReady()) return;
   const order = useExperience.getState().scenes;
   if (order.length === 0 || order.some((id) => !registry.has(id))) return;
 
@@ -437,6 +437,7 @@ function ratioToY(ratio: number) {
 }
 
 function jumpToRatio(ratio: number) {
+  if (!gsapReady()) return;
   const { ScrollTrigger } = getGsap();
   const y = ratioToY(ratio);
   const lenis = getLenis();
@@ -492,12 +493,25 @@ function onResize() {
 
 export function startDirector() {
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-  startLenis();
+  let stopped = false;
   window.addEventListener("resize", onResize);
-  window.addEventListener("scroll", onScrollSettle, { passive: true });
   window.addEventListener("orientationchange", onResize);
-  queueBuild();
+  window.addEventListener("scroll", onScrollSettle, { passive: true });
+  // GSAP + Lenis arrive while the loader is still on screen.
+  loadGsap()
+    .then(() => (stopped ? null : startLenis()))
+    .then(() => {
+      if (!stopped) queueBuild();
+    })
+    .catch(() => {
+      // The motion engine failed to load: fall back to the static, stacked page.
+      if (stopped) return;
+      const root = document.documentElement;
+      root.classList.remove("cine");
+      root.classList.add("static");
+    });
   return () => {
+    stopped = true;
     window.removeEventListener("resize", onResize);
     window.removeEventListener("orientationchange", onResize);
     window.removeEventListener("scroll", onScrollSettle);

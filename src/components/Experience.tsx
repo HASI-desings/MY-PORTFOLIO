@@ -1,6 +1,6 @@
 "use client";
 
-import { LazyMotion, domAnimation } from "framer-motion";
+import { LazyMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useEffect, useLayoutEffect } from "react";
 import { publishedProjects } from "@/content/projects";
@@ -26,6 +26,8 @@ import Scene05Philosophy from "./scenes/s05-philosophy/Scene05Philosophy";
 import Scene06Final from "./scenes/s06-final/Scene06Final";
 import RedCut from "./transitions/RedCut";
 import Toast from "./ui/Toast";
+
+const loadMotionFeatures = () => import("@/lib/motion-features").then((m) => m.default);
 
 // The 3D layer is its own chunk, fetched while the loader runs (Rules.md §5.3).
 const Stage = dynamic(() => import("./three/Stage"), { ssr: false });
@@ -107,7 +109,7 @@ export default function Experience() {
   const three = mode === "cine" && tierSettings[tier].three && !webglLost;
 
   return (
-    <LazyMotion features={domAnimation} strict>
+    <LazyMotion features={loadMotionFeatures} strict>
       <div
         id="svh-probe"
         aria-hidden="true"
