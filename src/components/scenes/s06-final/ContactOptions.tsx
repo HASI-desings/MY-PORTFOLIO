@@ -29,7 +29,7 @@ function CopyRow({ label, value }: { label: string; value: string }) {
   return (
     <p className="t-mono flex flex-wrap items-center gap-x-2 text-[11px] text-ice-60">
       <span>{final.copyPrefix}</span>
-      <span ref={textRef} className="select-all text-ice">
+      <span ref={textRef} className="select-all normal-case text-ice">
         {value}
       </span>
       <button
@@ -72,13 +72,8 @@ function CopyRow({ label, value }: { label: string; value: string }) {
  */
 export default function ContactOptions({ onClose }: ContactOptionsProps) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [mailHref, setMailHref] = useState<string | undefined>(undefined);
-
-  // The address is only assembled into a mailto: in the browser (Security.md §3).
-  useEffect(() => {
-    const id = requestAnimationFrame(() => setMailHref(mailtoUrl()));
-    return () => cancelAnimationFrame(id);
-  }, []);
+  // Built in the browser only: this sheet never renders on the server (Security.md §3).
+  const mailHref = mailtoUrl();
 
   useEffect(() => {
     rootRef.current?.querySelector<HTMLElement>("a")?.focus();

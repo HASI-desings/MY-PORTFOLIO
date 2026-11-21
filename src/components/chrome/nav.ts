@@ -21,10 +21,20 @@ export function goToScene(id: SceneId, opts: { focusCta?: boolean; immediate?: b
       .getElementById(`scene-${id}`)
       ?.scrollIntoView({ behavior: immediate ? "instant" : "smooth" });
   }
-  if (focusCta) {
-    window.setTimeout(
-      () => document.getElementById("cta")?.focus({ preventScroll: true }),
-      immediate ? 120 : 1600,
-    );
-  }
+  if (focusCta) focusWhenReady("cta", immediate ? 0 : 1200);
+}
+
+/**
+ * Focuses an element as soon as it can actually take focus: the CTA only becomes visible
+ * (and its scene stops being inert) once the scroll has arrived. Tries for up to 3 s.
+ */
+export function focusWhenReady(id: string, delay: number) {
+  const started = performance.now();
+  const attempt = () => {
+    const el = document.getElementById(id);
+    el?.focus({ preventScroll: true });
+    if (document.activeElement === el || performance.now() - started > 3000 + delay) return;
+    window.setTimeout(attempt, 100);
+  };
+  window.setTimeout(attempt, delay);
 }

@@ -9,6 +9,7 @@ import { loadGsap } from "@/lib/gsap";
 import { mailtoUrl, whatsappUrl } from "@/lib/contact";
 import { useMode } from "@/hooks/useReducedMotion";
 import { useIsActive, useSceneProgress, useSceneTimeline } from "@/hooks/useScene";
+import { focusWhenReady } from "@/components/chrome/nav";
 import SceneShell from "../SceneShell";
 import ContactOptions from "./ContactOptions";
 import CtaButton from "./CtaButton";
@@ -134,7 +135,8 @@ export default function Scene06Final() {
 
   const close = useCallback(() => {
     setOpen(false);
-    window.setTimeout(() => ctaRef.current?.focus(), 60);
+    // The CTA remounts after the sheet's exit animation; focus it as soon as it is back.
+    focusWhenReady("cta", 120);
   }, []);
 
   return (

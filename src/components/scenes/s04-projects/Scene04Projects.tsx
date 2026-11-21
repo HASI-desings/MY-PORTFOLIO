@@ -42,9 +42,16 @@ export default function Scene04Projects() {
 
   const closeProject = useCallback(() => {
     setOpen(null);
-    const url = new URL(location.href);
-    url.searchParams.delete("project");
-    history.replaceState(history.state, "", url);
+    // The panel steps back through its own history entry on close; clean the URL once that
+    // has settled (or straight away when there is no history step to wait for).
+    const clean = () => {
+      const url = new URL(location.href);
+      if (!url.searchParams.has("project")) return;
+      url.searchParams.delete("project");
+      history.replaceState(history.state, "", url);
+    };
+    window.addEventListener("popstate", clean, { once: true });
+    window.setTimeout(clean, 300);
   }, []);
 
   // Pre-lift the plate closest to the centre while the row travels.

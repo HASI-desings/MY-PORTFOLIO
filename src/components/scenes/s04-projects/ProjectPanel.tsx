@@ -29,7 +29,9 @@ export default function ProjectPanel({
             height={1000}
             className="aspect-[16/10] w-full border border-obsidian-700 object-cover"
           />
-          <StatusChip status={project.status} />
+          <div className="self-start">
+            <StatusChip status={project.status} />
+          </div>
           <p className="max-w-[60ch] text-[length:var(--fs-body-l)] leading-relaxed text-ice">
             {project.description}
           </p>
