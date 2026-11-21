@@ -7,16 +7,16 @@
 | 2 | Project setup | ✅ Done | Next.js 16.4.6, React 19.3.1, full tree stubbed; build/lint/typecheck pass |
 | 3 | Assets pipeline | ✅ Done | Owner waived the remaining stops: build straight through |
 | 4 | Design system & tokens | ✅ Done | `/styleguide` verified (removed in Phase 12) |
-| 5 | Core engine | — | |
-| 6 | Scene 01 · Identity | — | ⛔ Stop 3 (look test) |
-| 7 | Scene 02 · Toolkit | — | |
-| 8 | Scene 03 · What I Create | — | |
-| 9 | Scene 04 · Projects | — | |
-| 10 | Scene 05 · Philosophy | — | |
-| 11 | Scene 06 · Final | — | |
-| 12 | Responsiveness, fallbacks, resilience | — | |
-| 13 | Performance | — | |
-| 14 | QA & handover | — | ⛔ Final stop |
+| 5 | Core engine | ✅ Done | director, Lenis/ScrollTrigger, RED CUT + 3D clip planes, depth push, loader, chrome, tiers |
+| 6 | Scene 01 · Identity | ✅ Done | stops waived by owner |
+| 7 | Scene 02 · Toolkit | ✅ Done | 3D + 2.5D |
+| 8 | Scene 03 · What I Create | ✅ Done | six live visuals |
+| 9 | Scene 04 · Projects | ✅ Done | hidden while empty (D-012); verified with a fixture |
+| 10 | Scene 05 · Philosophy | ✅ Done | |
+| 11 | Scene 06 · Final | ✅ Done | studio backdrop from ME.png (D-014) |
+| 12 | Responsiveness, fallbacks, resilience | ✅ Done | 9 viewports, no-JS, reduced motion, lite, offline, slow network |
+| 13 | Performance | ✅ Done (one target not met here) | initial JS 235 KB, CLS ≤ 0.009; Lighthouse Perf limited by software GL — see QA_REPORT §7 |
+| 14 | QA & handover | ✅ Done | docs/QA_REPORT.md, README |
 
 ## Log
 
@@ -54,3 +54,18 @@
 - Primitives: `Button` (all §10 states), `Panel` (focus trap, Esc, ×, outside click, back gesture, focus return), `MaskText`, `SplitLetters`, `MonoLabel`, `Toast`.
 - Content files filled from App.md / Design.md; shared store `store/experience.ts`.
 - **Verified:** typecheck ✓ lint ✓ build ✓; `/styleguide` screenshot at 1440 px — tokens, type roles and every button state render; no console errors.
+
+### Phases 5–11 (built straight through at the owner's request)
+- Engine: `lib/director.ts` master timeline, Lenis (desktop) + ScrollTrigger, THE RED CUT as clip-paths on scene layers with matching 3D clipping planes, depth push, layer visibility/`inert`, scroll restoration, progress-preserving resize.
+- Loader with real asset progress (fonts, scroll engine, three, R3F, stage, typeface, grain), 1.2 s minimum, 6 s / 12 s notices, shared-element handoff onto the Scene 01 letters.
+- Scenes 01–06 as specified (see QA_REPORT for evidence); Scene 04 hidden while `projects.ts` is empty.
+
+### Phase 12
+- Branded 404 / error / global-error; OG image (generated, Archivo), sitemap, robots, manifest; `/styleguide` removed.
+- Fixed during testing: no-JS blank page (D-020), touch snap jump (D-023), static reveals (D-024), slow-network hydration (D-025), short-screen Scene 01, contrast (D-026), focus handling for skip link / contact / panel.
+
+### Phase 13
+- Initial JS 297 → 235 KB gzip (D-022); three pinned to 0.182 (D-021); canvas idles behind the loader; heap stable over 3 full scrolls.
+
+### Phase 14
+- `docs/QA_REPORT.md` (real results only), README (run, edit content, add a project, scripts, deploy). Not deployed.

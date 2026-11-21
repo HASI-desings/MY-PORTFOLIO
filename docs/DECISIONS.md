@@ -87,3 +87,39 @@
 - It also writes three 7 KB static subsets to `src/app/_og/` for the Open Graph image (the OG renderer cannot read variable woff2). `_og` is a private folder — Next.js never routes it.
 - Grain: 256 × 256 tileable noise quantised to 9 grey levels (31 KB instead of 62 KB; identical at 4 % opacity).
 - Project screenshots and covers: none generated — no projects are displayed (D-012). `scripts/capture-screenshots.mjs` runs and reports "nothing to capture" until a LIVE project is added.
+
+### D-018 · Scene 01 arrival is time-based — DECIDED
+- Design.md §9 lists Scene 01 0–35 % (plane slides in, name/roles/statement rise) "after loader handoff". Played as a scroll-scrubbed range, a first-time visitor would land on HASI alone and see the name only after scrolling half a screen.
+- The arrival plays **once, right after the handoff** (time-based), so the first frame is complete within seconds (App.md §6.1). From 35 % on everything is scroll-driven as specified (camera dolly + tilt, raking key light, name block parallax, RED CUT). The final CTA is likewise time-triggered at 80 %, as the spec asks.
+
+### D-019 · Scene 01 name block on an obsidian plate — DECIDED
+- The ~25 % red diagonal (D-003) runs from the bottom-left corner — exactly under the name block. Ice text on red fails contrast, and a soft scrim turned the red muddy.
+- The block sits on a **solid obsidian plate** (sharp, no radius): a poster caption over the red band, ≥ 4.5 : 1 contrast. The same plate language is used for small chrome over the red (scene rail, Instagram, scroll cue).
+
+### D-020 · `app/loading.tsx` removed — DECIDED
+- With `loading.tsx`, Next streams the page behind a Suspense fallback that only JavaScript swaps in. Without JavaScript the visitor saw just the HASI outline (verified). Security.md §6 requires a complete no-JS page, which wins over the Structure.md file list. The inline obsidian background already guarantees no white flash before hydration.
+
+### D-021 · three.js pinned to 0.182.0 — DECIDED
+- three r183 deprecates `THREE.Clock` and logs a warning, while @react-three/fiber 9.8.2 (latest) still constructs one. Rules.md §9 forbids console warnings in production, so three/@types/three are pinned to 0.182.0, the last release before the deprecation. Upgrade once R3F moves to `THREE.Timer`.
+
+### D-022 · Scroll engine and motion features load during the loader — DECIDED
+- Initial JS was 297 KB gzip (target ≤ 250). GSAP, ScrollTrigger and Lenis (`lib/gsap.ts`, `lib/lenis.ts`) and Framer Motion's animation features (`lib/motion-features.ts`, via `LazyMotion`) are now fetched while the loader runs and count toward its real progress. Result: **235 KB**. If the engine fails to load, the page falls back to the static stacked version.
+
+### D-023 · Touch chapter snapping — DECIDED
+- ScrollTrigger's `snap` receives a velocity-projected destination; after a fast flick it projected past the page end and jumped there (verified). Replaced with a settle-based snap: on touch, once scrolling stops inside Scene 03, the page eases to the nearest chapter if it is within 60 % of a screen; anywhere else the scroll is left alone.
+
+### D-024 · Static-mode reveals by scroll position — DECIDED
+- IntersectionObserver can skip elements during fast scrolls or jumps (a supporting line never appeared in testing). Reduced-motion reveals now check element positions on scroll (rAF-throttled).
+
+### D-025 · Slow-connection hydration — DECIDED
+- The loader read `navigator.connection` during its first render; on slow connections that produced different text than the server HTML (React #418) and the loader dropped out. Connection-dependent text is now read after hydration. A CSS-timed copy of the 6-second "taking longer" note covers the time before JavaScript arrives, and the JS notice times itself from navigation start.
+
+### D-026 · Inactive scene numbers at ice-60 — DECIDED
+- Design.md §6 sets inactive scene-index numbers to `--ice-30`; Design.md §2 sets `--ice-60` as the minimum for any readable text, and Lighthouse flagged 2.35 : 1. Accessibility wins: inactive numbers use ice-60 (active stays ice + red hairline).
+
+### D-027 · Static final scene — DECIDED
+- In cine mode the two final statements share one position (one replaces the other). In reduced-motion / no-JS mode they would overlap the portrait, so the second statement (still in the DOM for screen readers) is shown as an ice line across the shirt, just above the CTA.
+
+### D-028 · Files added beyond Structure.md — DECIDED
+- `lib/director.ts` (the scroll director), `lib/icons.ts` (Simple Icons subset shared by 3D and 2.5D), `lib/motion-features.ts` (async Framer features), `lib/portrait.generated.ts` (generated), `components/three/anchor.ts` (tool-label anchor, avoids a circular import), `components/chrome/nav.ts` (shared scene navigation + focus helper), `components/ui/StatusPage.tsx` (404 / error layout), `components/scenes/s03-create/visuals/types.ts`, `scripts/build-typeface.py`, `src/app/_og/*.ttf`.
+- Not created: `tailwind.config.ts`, `postcss.config.mjs` (D-013, D-015), `app/icon.tsx` (static favicon), `app/loading.tsx` (D-020), `content/fulldev.ts` and its panel (D-004).
