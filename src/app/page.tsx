@@ -1,3 +1,5 @@
+import Experience from "@/components/Experience";
+
 export default function Home() {
-  return <main id="main" />;
+  return <Experience />;
 }

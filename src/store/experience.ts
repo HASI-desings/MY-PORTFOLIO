@@ -19,6 +19,8 @@ interface ExperienceState {
   tierStepped: boolean;
   /** WebGL context lost → 3D scenes switch to their DOM fallbacks without reload. */
   webglLost: boolean;
+  /** The 3D HASI letters are on screen — the DOM letters can step back. */
+  lettersReady: boolean;
   /** Scenes actually rendered, in order (projects disappear while the list is empty). */
   scenes: SceneId[];
   activeScene: SceneId;
@@ -30,6 +32,7 @@ interface ExperienceState {
   setTier: (t: Tier) => void;
   stepDownTier: () => void;
   setWebglLost: (lost: boolean) => void;
+  setLettersReady: (ready: boolean) => void;
   setScenes: (s: SceneId[]) => void;
   setActiveScene: (s: SceneId) => void;
   setHoveredTool: (id: string | null) => void;
@@ -43,9 +46,11 @@ let toastId = 0;
 
 export const useExperience = create<ExperienceState>((set, get) => ({
   loaderState: "loading",
-  tier: "mid",
+  // "none" until detected: server HTML and no-JS visitors get the DOM versions.
+  tier: "none",
   tierStepped: false,
   webglLost: false,
+  lettersReady: false,
   scenes: [],
   activeScene: "identity",
   hoveredTool: null,
@@ -59,7 +64,8 @@ export const useExperience = create<ExperienceState>((set, get) => ({
     if (tierStepped || tier === "none" || tier === "low") return;
     set({ tier: order[order.indexOf(tier) + 1], tierStepped: true });
   },
-  setWebglLost: (webglLost) => set({ webglLost }),
+  setWebglLost: (webglLost) => set(webglLost ? { webglLost, lettersReady: false } : { webglLost }),
+  setLettersReady: (lettersReady) => set({ lettersReady }),
   setScenes: (scenes) => set({ scenes }),
   setActiveScene: (activeScene) => {
     if (get().activeScene !== activeScene) set({ activeScene });

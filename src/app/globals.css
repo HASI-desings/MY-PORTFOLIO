@@ -476,3 +476,272 @@ html.static .reveal.is-in {
 html:not(.js) .reveal {
   opacity: 1;
 }
+
+/* ───────────────────────── Chrome ───────────────────────── */
+.chrome-fade {
+  transition:
+    opacity var(--dur-med) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
+}
+
+/* Lit final scene: chrome turns obsidian over the studio backdrop (D-014). */
+html[data-chrome="light"] {
+  --chrome-fg: var(--obsidian);
+  --chrome-fg-dim: rgb(17 18 23 / 0.62);
+  --chrome-fg-faint: rgb(17 18 23 / 0.32);
+}
+
+.scroll-cue-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -12px;
+  width: 1px;
+  height: 12px;
+  background: var(--red);
+  animation: cue-travel 1.8s var(--ease-in-out) infinite;
+}
+
+@keyframes cue-travel {
+  to {
+    transform: translateY(44px);
+  }
+}
+
+/* Custom cursor (fine pointer only). */
+html.has-cursor,
+html.has-cursor a,
+html.has-cursor button {
+  cursor: none;
+}
+
+html.has-cursor [data-cursor="text"],
+html.has-cursor [data-cursor="text"] * {
+  cursor: auto;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  background: var(--chrome-fg);
+  transition: opacity var(--dur-micro) ease;
+}
+
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+  border: 1px solid var(--chrome-fg-faint);
+  transition:
+    width var(--dur-short) var(--ease-out),
+    height var(--dur-short) var(--ease-out),
+    margin var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    opacity var(--dur-micro) ease;
+}
+
+.cursor-ring[data-mode="hover"] {
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  border-color: var(--red);
+}
+
+.cursor-dot[data-mode="hover"],
+.cursor-dot[data-mode="text"],
+.cursor-ring[data-mode="text"],
+.cursor-dot[data-mode="hidden"],
+.cursor-ring[data-mode="hidden"] {
+  opacity: 0;
+}
+
+/* Before the director takes over, only the first scene is on screen. */
+html.cine .scene:not([data-scene-layer="identity"]) {
+  visibility: hidden;
+}
+
+/* Tab hidden → CSS loops pause (Design.md §11). */
+html.is-hidden *,
+html.is-hidden *::before,
+html.is-hidden *::after {
+  animation-play-state: paused !important;
+}
+
+/* Radial vignette over the 3D room (Design.md §8): obsidian-900 at the edges, 35 %. */
+.stage-vignette {
+  background: radial-gradient(
+    ellipse 75% 70% at 50% 50%,
+    rgb(11 12 16 / 0) 55%,
+    rgb(11 12 16 / 0.35) 100%
+  );
+}
+
+/* ───────────────────────── Scene 01 ───────────────────────── */
+/* Lite / no-WebGL HASI: ice faces, obsidian extrusion lit from top-left, thin red rim. */
+.hasi-depth {
+  color: var(--ice);
+  text-shadow:
+    1px 1px 0 #c9d0d7,
+    2px 2px 0 var(--graphite),
+    3px 3px 0 var(--graphite),
+    4px 4px 0 var(--obsidian-700),
+    5px 5px 0 var(--obsidian-700),
+    6px 6px 0 var(--obsidian-800),
+    7px 7px 0 var(--obsidian-800),
+    8px 8px 0 var(--obsidian-800),
+    9px 8px 0 rgb(239 35 60 / 0.55);
+}
+
+.hasi-depth .letter {
+  transition: text-shadow var(--dur-short) var(--ease-out);
+}
+
+.hasi-depth .letter:hover {
+  text-shadow:
+    1px 1px 0 #c9d0d7,
+    2px 2px 0 var(--graphite),
+    3px 3px 0 var(--graphite),
+    4px 4px 0 var(--obsidian-700),
+    5px 5px 0 var(--obsidian-700),
+    6px 6px 0 var(--obsidian-800),
+    7px 7px 0 var(--obsidian-800),
+    8px 8px 0 var(--red),
+    9px 8px 0 var(--red);
+}
+
+/* The DOM red diagonal (lite / no-WebGL): rises 18° from the bottom-left corner. */
+.identity-plane {
+  position: absolute;
+  left: -12vw;
+  top: calc(100% + 12vw * 0.3249);
+  width: 170vmax;
+  height: calc(25svh * 0.951);
+  background: var(--red);
+  transform-origin: 0 50%;
+  transform: translateY(-50%) rotate(-18deg) scaleX(var(--reveal, 1));
+}
+
+/* Cinematic mode: intro elements wait below their masks until the handoff. */
+html.cine [data-intro] .mask-line__inner {
+  transform: translateY(110%);
+}
+
+html.cine .identity-plane {
+  --reveal: 0;
+}
+
+/* ───────────────────────── Scene 02 · 2.5D toolkit ───────────────────────── */
+.tk-field {
+  --tile: clamp(52px, min(12.5vw, 10svh), 92px);
+}
+
+/* Centred with margins so GSAP owns the transform (entry + depth parallax). */
+.tk-item {
+  margin-left: calc(var(--tile) * var(--s) / -2);
+  margin-top: calc(var(--tile) * var(--s) / -2);
+}
+
+.tk-far {
+  --s: 0.78;
+}
+
+.tk-mid {
+  --s: 0.92;
+}
+
+.tk-near {
+  --s: 1.08;
+}
+
+.tk-tile {
+  display: grid;
+  place-items: center;
+  width: calc(var(--tile) * var(--s));
+  height: calc(var(--tile) * var(--s));
+  color: var(--ice);
+  background: linear-gradient(145deg, #262832 0%, var(--obsidian-800) 62%);
+  border: 1px solid var(--obsidian-700);
+  border-radius: 4px;
+  box-shadow:
+    inset 0 1px 0 rgb(223 229 235 / 0.07),
+    0 20px 32px -20px rgb(0 0 0 / 0.95);
+  transition:
+    transform var(--dur-med) var(--ease-out),
+    color var(--dur-micro) var(--ease-out),
+    opacity var(--dur-med) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out);
+}
+
+.tk-far .tk-tile {
+  opacity: 0.72;
+}
+
+.tk-tile.is-active {
+  transform: translateY(-6px) scale(1.15);
+  color: var(--brand);
+  border-color: var(--ice-30);
+  opacity: 1;
+}
+
+.tk-tile.is-dim {
+  opacity: 0.4;
+}
+
+.tk-core-wrap {
+  --core-w: calc(var(--tile) * 1.05);
+  width: var(--core-w);
+  height: calc(var(--core-w) * 3.2);
+  perspective: 900px;
+}
+
+.tk-core {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: tk-spin 78s linear infinite; /* 0.08 rad/s */
+}
+
+.tk-face {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(239 35 60 / 0.8);
+  backface-visibility: hidden;
+}
+
+.tk-f1 {
+  background: linear-gradient(160deg, #343843, var(--graphite) 55%, #1f2128);
+  transform: translateZ(calc(var(--core-w) / 2));
+}
+
+.tk-f2 {
+  background: linear-gradient(160deg, #2a2d35, #1d1f26);
+  transform: rotateY(90deg) translateZ(calc(var(--core-w) / 2));
+}
+
+.tk-f3 {
+  background: linear-gradient(160deg, #24272f, #18191f);
+  transform: rotateY(180deg) translateZ(calc(var(--core-w) / 2));
+}
+
+.tk-f4 {
+  background: linear-gradient(160deg, #3a1f27, #1d1f26 40%);
+  transform: rotateY(270deg) translateZ(calc(var(--core-w) / 2));
+}
+
+@keyframes tk-spin {
+  to {
+    transform: rotateY(360deg);
+  }
+}
