@@ -2,8 +2,6 @@
 
 > Work strictly in order. Each phase ends with: (1) its **Done when** list verified, (2) `docs/PROGRESS.md` updated, (3) one or more commits pushed to `main`. ⛔ marks an **approval stop** — summarize and wait for the owner before continuing.
 
-Map to the full-dev skill: the concept, brand and palette are **already decided** in these files, so full-dev's discovery/concept/inspiration phases are replaced by Phase 1 (study + confirm). Use full-dev's playbooks for design system, motion, build, QA and handover.
-
 ---
 
 ## Phase 0 — Wipe & prepare the repository
@@ -66,8 +64,8 @@ Map to the full-dev skill: the concept, brand and palette are **already decided*
 **Done when:** matches Design.md §9 Scene 01 on desktop + mobile + lite. ⛔ **Approval stop 3 (look test)** — screenshots/recording of loader → Scene 01 at desktop and phone sizes. This sets the visual bar for everything after.
 
 ## Phase 7 — Scene 02 · Toolkit
-Core, tool tiles (Simple Icons), orbit rings, entry timeline, camera orbit, hover lift + labels, Full Dev object + panel, a11y list, `Toolkit2D`.
-**Done when:** all 17 tools + Full Dev present, keyboard and touch work, mobile 2.5D version polished.
+Core, tool tiles (Simple Icons), orbit rings, entry timeline, camera orbit, hover lift + labels, a11y list, `Toolkit2D`.
+**Done when:** all 17 tools present, keyboard and touch work, mobile 2.5D version polished.
 
 ## Phase 8 — Scene 03 · What I Create
 Chapter system (horizontal desktop / vertical mobile), six live visuals, tags (T3), progress segments.

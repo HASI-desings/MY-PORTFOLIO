@@ -83,7 +83,7 @@ Line-height: display 0.82–0.9 · headings 1.0 · body 1.5. Max body measure 60
 | **T1** | Immediately | none | HASI, scene titles, nav wordmark, scene index, primary CTA |
 | **T2** | As the visitor arrives | scroll position | Name line, statement, tool objects, discipline titles, project plates, philosophy lines, final statements |
 | **T3** | On intent | hover (desktop) · tap (touch) · focus (keyboard) | Tool name + one line, discipline tags, project category/status, small details |
-| **T4** | On demand | click/tap → panel | Full Dev panel, project detail view, discipline detail list |
+| **T4** | On demand | click/tap → panel | Project detail view, discipline detail list |
 | **T5** | On commitment | CTA click | Email / WhatsApp options |
 
 Rules: one T1/T2 idea per viewport · every T3 has a touch and keyboard equivalent · every T4 panel closes with Esc, close button, outside click, and mobile back gesture, and returns focus to its trigger.
@@ -207,8 +207,6 @@ Scroll lengths are pin durations. Percentages refer to that scene's own timeline
 | Vercel | Infrastructure | Deploying and hosting. |
 | Supabase | Infrastructure | Databases, auth and realtime backends. |
 | Linux | Infrastructure | Daily development environment. |
-
-**Full Dev object:** larger (1.6×), red-faced tile with "FULL DEV" in Archivo, positioned near the Core, closer to camera. Panel content (T4): "FULL DEV — my open-source creative-director + full-stack system for Claude and Claude Code. 13 phases from discovery to deploy, 67 curated skills, a built-in design engine, and an anti-generic checklist." Button: "VIEW ON GITHUB ↗".
 
 **Timeline:**
 - 0–15%: (arriving from RED CUT) Core rises from below frame into center, title mask-rises.

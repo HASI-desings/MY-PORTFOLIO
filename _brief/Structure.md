@@ -77,7 +77,6 @@ MY-PORTFOLIO/
 │   ├── content/                    # ALL editable personal content lives here (single source of truth)
 │   │   ├── site.ts                 # brand, name, roles, statement, location, contact (email, whatsapp, instagram, github), prefilled messages
 │   │   ├── toolkit.ts              # tools: id, name, group, line, simpleIconSlug, featured
-│   │   ├── fulldev.ts              # Full Dev panel copy + link
 │   │   ├── disciplines.ts          # 6 disciplines: index, title, line, tags, visualId
 │   │   ├── projects.ts             # projects: slug, name, description, category, status, url?, image, featured, order
 │   │   ├── philosophy.ts           # main line + supporting lines
@@ -109,7 +108,6 @@ MY-PORTFOLIO/
 │   │   │   ├── s02-toolkit/
 │   │   │   │   ├── Scene02Toolkit.tsx
 │   │   │   │   ├── ToolLabel.tsx         # DOM label anchored to projected 3D position
-│   │   │   │   ├── FullDevPanel.tsx
 │   │   │   │   ├── ToolkitA11yList.tsx   # Visually hidden focusable list mirroring 3D tools
 │   │   │   │   └── Toolkit2D.tsx         # 2.5D DOM version (mobile / lite)
 │   │   │   ├── s03-create/

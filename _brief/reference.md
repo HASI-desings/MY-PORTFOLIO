@@ -43,15 +43,7 @@ The **colour palette** is defined in Design.md §2 (originally from a brand pale
 
 ---
 
-## 3. The full-dev skill
-
-- Skill name: **`full-dev`** (repo: `HASI-desings/Claude-Full-DEV`). Use it for its phase playbooks: design system, motion specs, build, QA, handover, and its **anti-generic checklist** (run every scene against it before showing the owner).
-- Its discovery/concept/inspiration-research phases are **already completed** by these spec files — do not generate new concepts or research new inspiration sites.
-- Its bundled UI/UX design engine may be consulted for UX rules and accessibility, **not** for palettes or fonts (those are fixed here).
-
----
-
-## 4. Libraries (exact package names)
+## 3. Libraries (exact package names)
 
 | Purpose | Package |
 |---|---|
@@ -71,20 +63,19 @@ The **colour palette** is defined in Design.md §2 (originally from a brand pale
 
 Use latest stable versions at build time. No other runtime dependencies without recording why in DECISIONS.md.
 
-## 5. Fonts (Google Fonts via `next/font/google`, all OFL)
+## 4. Fonts (Google Fonts via `next/font/google`, all OFL)
 - **Archivo** (variable — weight + width axes) — display
 - **Geist** — text
 - **Geist Mono** — mono labels
 - 3D text: Archivo heavy weight converted to `public/fonts/archivo-black.typeface.json` (facetype.js format).
 
-## 6. Brand logos (Simple Icons slugs — verify each exists; if missing, use an Archivo monogram tile)
+## 5. Brand logos (Simple Icons slugs — verify each exists; if missing, use an Archivo monogram tile)
 `claude` (or `anthropic`), `openai` (ChatGPT), `figma`, `visualstudiocode`, `github`, `openjdk` (Java), `javascript`, `typescript`, `react`, `nextdotjs`, `html5`, `css` (or `css3`), `tailwindcss`, `python`, `vercel`, `supabase`, `linux`, `whatsapp`, `instagram`, `gmail` (optional).
 Logos are trademarks of their owners and are used only to indicate tools used. Do not modify their shapes.
 
-## 7. External URLs (the only ones allowed in the site)
+## 6. External URLs (the only ones allowed in the site)
 - Dollar Store POS — `https://dollar-store-sable.vercel.app/#/sell`
 - Goods Transport Company POS — `https://rstg.vercel.app/`
-- Full Dev — `https://github.com/HASI-desings/Claude-Full-DEV`
 - GitHub — `https://github.com/HASI-desings`
 - Instagram — `https://instagram.com/hussnain_7979`
 - WhatsApp — `https://wa.me/923141481275`

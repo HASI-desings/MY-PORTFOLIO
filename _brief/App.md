@@ -47,7 +47,7 @@ Never invent clients, years of experience, awards, numbers, testimonials or skil
 A dark, nearly empty obsidian space. Enormous **HASI** lettering is revealed as a physical, architectural structure standing in the room — lit, with real depth and a thin red rim of light. A sharp red diagonal plane slices the composition. Then quietly: **HUSSNAIN SOHAIL** · *Founder / Developer / Digital Creator* · the one-line statement. **No person appears.** The lettering is the hero.
 
 ### SCENE 02 — THE TOOLKIT
-The space becomes a three-dimensional workspace. At its center floats **the Core** — a slowly turning matte-obsidian monolith with red edge light, an abstract stand-in for the creator. Around it, the tools he really uses float at different depths, enter one by one, drift and rotate gently. Hover/tap a tool → it lifts toward the viewer and reveals its name and one honest line. **Full Dev**, his own open-source system, is the single special object: larger, red-accented, opens a detail panel.
+The space becomes a three-dimensional workspace. At its center floats **the Core** — a slowly turning matte-obsidian monolith with red edge light, an abstract stand-in for the creator. Around it, the tools he really uses float at different depths, enter one by one, drift and rotate gently. Hover/tap a tool → it lifts toward the viewer and reveals its name and one honest line.
 
 ### SCENE 03 — WHAT I CREATE
 Six disciplines, each a chapter with its own code-built visual world (never six identical cards):
@@ -79,7 +79,7 @@ For the first time, the creator appears: `ME.png`, his silhouette portrait, rise
 
 - **Visitors:** potential clients (local businesses, startups, international freelance clients), collaborators, recruiters.
 - **Primary goal:** clicking **LET'S MAKE IT REAL** and contacting him.
-- **Secondary goal:** opening a live project or the Full Dev repo.
+- **Secondary goal:** opening a live project.
 
 ---
 
@@ -100,6 +100,6 @@ For the first time, the creator appears: `ME.png`, his silhouette portrait, rise
 
 ## 7. Delivery
 
-- Built by Claude Code with the **full-dev** skill, following Phases.md.
+- Built by Claude Code, following Phases.md.
 - Repository: `HASI-desings/MY-PORTFOLIO`, branch `main`. The old portfolio is **deleted first**.
 - **Commit and push only. Do not deploy.** The owner deploys to Vercel himself.

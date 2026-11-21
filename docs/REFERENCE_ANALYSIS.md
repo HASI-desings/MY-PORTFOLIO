@@ -56,9 +56,9 @@
 | 2 | **The name is built, not faded in** — it grows from the centre | 1.5–3 s | Loader HASI outline **fills bottom→top with real progress**, then hands off to the Scene 01 letters | Loader → 01 |
 | 3 | **Scroll moves between composed frames**, not down a long page | whole film | Pinned scenes, one idea per viewport | All |
 | 4 | **Dark room + one strong light accent + faint atmosphere** | 6–15 s | Obsidian room, cool ice key light, thin red rim, low haze, ≤ 400 slow dust motes | 01, 02 |
-| 5 | **Floating tool tiles at different depths around a central anchor** | 6.6–15 s | 17 brushed-metal tiles in three asymmetric depth rings around **the Core** monolith (abstract, not a person) + Full Dev | Scene 02 |
+| 5 | **Floating tool tiles at different depths around a central anchor** | 6.6–15 s | 17 brushed-metal tiles in three asymmetric depth rings around **the Core** monolith (abstract, not a person) | Scene 02 |
 | 6 | **One sweeping light as the moving accent** — used sparingly | 8–14 s, 16–21 s | Key light **rakes across the HASI faces** (01); vertical **light beam** sweeps the philosophy line (05); red pulses travel graph edges (03). Red, sparse, never an orbiting fire streak | 01, 03, 05 |
-| 7 | **Work as a spatial gallery with depth** | 23.5–28 s | Five real project **plates on a dark surface** in perspective that **lift** on intent — a row, not a dome | Scene 04 |
+| 7 | **Work as a spatial gallery with depth** | 23.5–28 s | Project **plates on a dark surface** in perspective that **lift** on intent — a row, not a dome. Built, but hidden until projects are published (DECISIONS D-012) | Scene 04 |
 | 8 | **Full-bleed colour transition** between acts | 28.5–30 s | **THE RED CUT** — one sharp −18° red plane sweeping across, clean geometry instead of a smear | 01→02, 03→04, 05→06 |
 | 9 | **Diagonal colour-split poster** as the last frame, subject in front of huge type | 30–34 s | Scene 06: ME.png rises, statements behind his head/shoulders, red diagonal low, CTA rises over the portrait | Scene 06 |
 | 10 | **Camera moves carry you between scenes** (crane, tilt, dive) | 6 s, 15 s, 21 s, 28 s | **Depth push** (dolly forward through the outgoing scene) | 02→03, 04→05 |
@@ -77,9 +77,9 @@
 | Walking/standing 3D character | reference.md §2 — no character at all | — |
 | Smoking pose, sunglasses portrait, sports car and its brand logo | Imagery not ours | ME.png only, Scene 06 only |
 | Serif display type, grunge-textured letter fill | Fonts and materials are fixed | Archivo / Geist / Geist Mono; matte + brushed metal |
-| Adobe-style app icons and tools Hussnain doesn't use | Never invent skills/tools (Rules.md §1.1) | Only the 17 listed tools + Full Dev |
+| Adobe-style app icons and tools Hussnain doesn't use | Never invent skills/tools (Rules.md §1.1) | Only the 17 listed tools |
 | Year-by-year timeline arc, clock dial, experience history | Not in the brief; would imply invented history | — |
-| Dome of dozens of project panels with invented titles | Fabrication | 5 real projects, honest status |
+| Dome of dozens of project panels with invented titles | Fabrication | Real projects only, honest status — none shown for now |
 | Melting/dripping colour smear | Not our language | RED CUT: sharp, geometric, −18° |
 | Spark explosions, bokeh bursts, orbiting fire streak | Effects without meaning (Design.md §1.7) | Quiet dust, one raking light |
 | Its layouts, nav, side-text columns, framing; any frame or asset | Rules.md §2.7, §8.6 | Our grid and chrome per Design.md |
@@ -94,11 +94,14 @@
 
 ---
 
-## 6. Spec contradictions & open questions
+## 6. Spec contradictions — resolved at Approval Stop 1
 
-Full list with my proposed resolutions is in `docs/DECISIONS.md`. The four that need the owner:
+| Question | Owner's answer | Record |
+|---|---|---|
+| Red area: Rules.md ~3 % cap vs Design.md's big red planes in Scenes 01 and 06 | Design.md wins on those screens | D-003 |
+| Branch | Straight to `main` | D-001 |
+| A featured toolkit object in Scene 02 | Removed from the site and the repository | D-004 |
+| Projects | None displayed for now | D-012 |
+| Portrait resolution (chat copy is 1122 × 1402) | Owner checking for a larger original; this copy is used until then | D-002 |
 
-1. **Red area.** Rules.md §2.1 caps red at ~3 % of any static frame and Design.md §1.3 says red is never a large surface — but Design.md §9 gives Scene 01 a red plane "covering ~25 % of the frame" and Scene 06 "a large red diagonal plane". Rules.md wins by hierarchy. **Proposal:** both planes become sharp −18° **blades** (~3–4 % of the frame); red only goes big during THE RED CUT. Reason: if a quarter of the screen is red, the red button and red hover states stop being signals.
-2. **Branch.** The brief says commit to `main`; this session is configured to push to `claude/admiring-darwin-hl60ks`. Phase 0 is pushed there. Push directly to `main` from now on, or keep the branch and merge when ready?
-3. **Full Dev numbers.** Design.md's panel copy says "67 curated skills"; the Full Dev README now says **95 bundled skills (was 67)**. Publishing 67 would be out of date. **Proposal:** use 95.
-4. **Portrait resolution.** The only copy of ME.png is the chat-attached 1122 × 1402 image. Structure.md expects `me-1600.*`, and upscaling is forbidden. On a 2× laptop at ~88 svh the portrait needs ~1580 px of height, so it will be slightly soft. If the original full-resolution photo exists, upload it; otherwise I export at native size.
+All other interpretations: `docs/DECISIONS.md`.

@@ -3,8 +3,8 @@
 | Phase | Name | Status | Notes |
 |---|---|---|---|
 | 0 | Wipe & prepare | ✅ Done | Only `_brief/` (8 spec files + `Video.mp4` + `ME.png`) remains. Pushed. |
-| 1 | Study & confirm | ✅ Done · ⛔ **Approval stop 1** | `docs/REFERENCE_ANALYSIS.md`, `docs/DECISIONS.md`, `scripts/extract-reference-frames.sh` |
-| 2 | Project setup | ⏳ Waiting for approval | |
+| 1 | Study & confirm | ✅ Done · ⛔ Stop 1 approved | `docs/REFERENCE_ANALYSIS.md`, `docs/DECISIONS.md`, `scripts/extract-reference-frames.sh` |
+| 2 | Project setup | ⏳ In progress | |
 | 3 | Assets pipeline | — | ⛔ Stop 2 |
 | 4 | Design system & tokens | — | |
 | 5 | Core engine | — | |
@@ -26,7 +26,7 @@
 - Commit: `chore: remove previous portfolio, keep only _brief`.
 
 ### Phase 1
-- Read all 8 spec files and the full-dev skill (SKILL.md, toolkit, anti-generic checklist).
+- Read all 8 spec files and the build playbooks (design system, motion, QA, anti-generic checklist).
 - Studied `Video.mp4`: 69 frames at 2 fps, 9 contact sheets, 14 monitor-only crops; watched at full speed for rhythm. Frames stay in the session scratchpad, not committed.
-- Verified spec facts against live sources: Simple Icons slugs (2 missing), Full Dev README numbers (95, not 67), network access for Phase 3 (project hosts blocked).
-- Open questions: red area, branch, Full Dev number, portrait resolution (see DECISIONS.md).
+- Verified spec facts against live sources: Simple Icons slugs (2 missing), network access for Phase 3.
+- Stop 1 answers: Design.md wins on red for its red screens · push to `main` · the featured toolkit object is removed from site and repo · no projects displayed for now (DECISIONS D-001, D-003, D-004, D-012).

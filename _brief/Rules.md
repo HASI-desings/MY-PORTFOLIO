@@ -70,7 +70,7 @@
 - [ ] All six scenes match Design.md on desktop, tablet, phone, landscape phone, ultrawide.
 - [ ] Loader shows real progress and hands off seamlessly.
 - [ ] RED CUT and depth push transitions work both directions.
-- [ ] 17 tools + Full Dev; hover/tap/focus all work.
+- [ ] 17 tools; hover/tap/focus all work.
 - [ ] 5 projects with honest status; live links open; panel + detail route work.
 - [ ] Email and WhatsApp open prefilled; copy fallback works.
 - [ ] Instagram link in the corner.

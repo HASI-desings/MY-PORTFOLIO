@@ -1,7 +1,5 @@
 PROMPT — BUILD "HASI DESIGNS", THE CINEMATIC PORTFOLIO OF HUSSNAIN SOHAIL
 
-Use the full-dev skill for this entire project.
-
 You are the creative director, motion designer, creative technologist and senior full-stack engineer for HASI DESIGNS, the personal portfolio of Hussnain Sohail. You will rebuild his portfolio from zero inside the GitHub repository HASI-desings/MY-PORTFOLIO (branch main). Treat every component as the most important part of the project. No throwaway work, no template look, nothing generic.
 
 ------------------------------------------------------------
@@ -21,7 +19,7 @@ Eight specification files and two assets. Put them all in a folder named _brief/
 
 6. Security.md   — RESILIENCE. Security headers, link safety, and every situation that could break, stall or frustrate a visitor (slow loading, failed assets, offline, WebGL crashes, blocked links, missing mail app, error pages, no-JavaScript) with the exact solution for each.
 
-7. reference.md  — REFERENCES AND RESOURCES. How to study the inspiration video, what to take from it and what to never take, how to use the full-dev skill here, and the exact names of every package, font, logo and URL.
+7. reference.md  — REFERENCES AND RESOURCES. How to study the inspiration video, what to take from it and what to never take, and the exact names of every package, font, logo and URL.
 
 8. prompt.txt    — this file: how to use the others.
 
@@ -32,7 +30,7 @@ ASSETS:
 ------------------------------------------------------------
 WHAT YOU ARE BUILDING (one paragraph)
 ------------------------------------------------------------
-A scroll-controlled cinematic film in six scenes — 01 Identity (giant 3D HASI lettering, no person), 02 Toolkit (my real tools floating in 3D around an abstract Core, plus my own Full Dev system), 03 What I Create (six disciplines, each with its own live code-built visual), 04 Selected Projects (real projects as liftable plates with honest LIVE / IN DEVELOPMENT / CONCEPT status), 05 Philosophy (pure giant typography: "CREATIVITY IS A PROCESS, NOT A TRAIT."), 06 Final (my silhouette is revealed for the first time; the red "LET'S MAKE IT REAL" button rises from the bottom and opens prefilled Email and WhatsApp). Palette: Obsidian #111217, Ice Grey #DFE5EB, Racing Red #EF233C used only as a signal. Everything is live code that reacts to scroll, hover and tap. It must work beautifully on every screen size, from small phones to ultrawide monitors, in portrait and landscape.
+A scroll-controlled cinematic film in six scenes — 01 Identity (giant 3D HASI lettering, no person), 02 Toolkit (my real tools floating in 3D around an abstract Core), 03 What I Create (six disciplines, each with its own live code-built visual), 04 Selected Projects (real projects as liftable plates with honest LIVE / IN DEVELOPMENT / CONCEPT status), 05 Philosophy (pure giant typography: "CREATIVITY IS A PROCESS, NOT A TRAIT."), 06 Final (my silhouette is revealed for the first time; the red "LET'S MAKE IT REAL" button rises from the bottom and opens prefilled Email and WhatsApp). Palette: Obsidian #111217, Ice Grey #DFE5EB, Racing Red #EF233C used only as a signal. Everything is live code that reacts to scroll, hover and tap. It must work beautifully on every screen size, from small phones to ultrawide monitors, in portrait and landscape.
 
 ------------------------------------------------------------
 HOW TO WORK
